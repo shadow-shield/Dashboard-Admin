@@ -11,7 +11,7 @@ import logo from './assets/logo.jpg';
 
 // Importar los componentes de cada vista (que crearás más adelante)
 import Dashboard from './pages/Dashboard.jsx';
-import Eventos from './pages/Eventos.jsx';
+import Reportes from './pages/Reportes.jsx';
 import Admitidos from "./pages/Admitidos.jsx";
 
 const App = () => {
@@ -39,11 +39,11 @@ const App = () => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemButton component={Link} to="/eventos">
+                            <ListItemButton component={Link} to="/Reportes">
                                 <ListItemIcon sx={{ color: 'white' }}>
                                     <EventIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Eventos" />
+                                <ListItemText primary="Reportes" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
@@ -94,7 +94,7 @@ const App = () => {
                     />
                     <Routes>
                         <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/eventos" element={<Eventos />} />
+                        <Route path="/Reportes" element={<Reportes />} />
                         <Route path="/admitidos" element={<Admitidos />} />
                     </Routes>
                 </Box>

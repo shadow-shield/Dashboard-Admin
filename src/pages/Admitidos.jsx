@@ -52,7 +52,7 @@ const Admitidos = () => {
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <SearchIcon /> {/* Aquí se añade el ícono de búsqueda */}
+                            <SearchIcon /> 
                         </InputAdornment>
                     ),
                 }}
