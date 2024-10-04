@@ -7,6 +7,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 
 import logo from './assets/logo.jpg';
 
@@ -15,6 +16,7 @@ import GraficaPuntaje from './components/Grafica_Puntaje.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Reportes from './pages/Reportes.jsx';
 import Admitidos from "./pages/Admitidos.jsx";
+import GraficaInst from './components/Grafica_Instituciones.jsx';
 
 const App = () => {
     return (
@@ -64,6 +66,14 @@ const App = () => {
                                 <ListItemText primary="Admitidos" />
                             </ListItemButton>
                         </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemButton component={Link} to="/GraficaInst">
+                                <ListItemIcon sx={{ color: 'white' }}>
+                                    <DonutLargeIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Grafica Instituciones" />
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                     <Divider />
                     <List>
@@ -107,6 +117,7 @@ const App = () => {
                         <Route path="/Reportes" element={<Reportes />} />
                         <Route path="/admitidos" element={<Admitidos />} />
                         <Route path="/Graficas" element={<GraficaPuntaje />} />
+                        <Route path="/GraficaInst" element={<GraficaInst />} />
                     </Routes>
                 </Box>
             </Box>
