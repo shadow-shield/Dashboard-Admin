@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import {
     Table,
     TableBody,
@@ -11,27 +11,14 @@ import {
     TextField,
     InputAdornment,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search'; // Importa el ícono de búsqueda
+import SearchIcon from '@mui/icons-material/Search'; 
+import {datosEstudiantes} from '../data/datosEstudiantes'; 
 
 const Admitidos = () => {
-    const [admitidos, setAdmitidos] = useState([]);
+    const [admitidos, ] = useState(datosEstudiantes);
     const [searchTerm, setSearchTerm] = useState('');
 
-    useEffect(() => {
-        const fetchEstudiantes = async () => {
-            try {
-                const response = await fetch('src/data/admitidos.json');
-                const data = await response.json();
-                setAdmitidos(data);
-            } catch (error) {
-                console.error('Error al cargar los datos de estudiantes:', error);
-            }
-        };
-
-        fetchEstudiantes();
-    }, []);
-
-    // Filtrar los admitidos según el término de búsqueda
+    
     const filteredAdmitidos = admitidos.filter((item) => {
         const values = Object.values(item);
         return values.some((value) =>
@@ -48,7 +35,7 @@ const Admitidos = () => {
                 fullWidth
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ width: '300px'}} 
+                style={{ width: '300px' }} 
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -89,6 +76,9 @@ const Admitidos = () => {
                                 <TableCell sx={{ color: 'white' }}>INSTITUCIÓN EDUCATIVA</TableCell>
                                 <TableCell sx={{ color: 'white' }}>SNP ICFES</TableCell>
                                 <TableCell sx={{ color: 'white' }}>PUNTAJE ICFES</TableCell>
+                                <TableCell sx={{ color: 'white' }}>CIRC_DESCRIPCION</TableCell>
+                                <TableCell sx={{ color: 'white' }}>ASPI_DPTORESIDENCIA</TableCell>
+                                <TableCell sx={{ color: 'white' }}>ASPI_MPIORESIDENCIA</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -108,6 +98,9 @@ const Admitidos = () => {
                                     <TableCell>{item.INST_NOMBREINSTITUCION}</TableCell>
                                     <TableCell>{item.ESSE_SNP}</TableCell>
                                     <TableCell>{item.PRXF_PUNTAJEOBTENIDO}</TableCell>
+                                    <TableCell>{item.CIRC_DESCRIPCION}</TableCell>
+                                    <TableCell>{item.ASPI_DPTORESIDENCIA_1}</TableCell>
+                                    <TableCell>{item.ASPI_MPIORESIDENCIA_1}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

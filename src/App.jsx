@@ -4,12 +4,14 @@ import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divide
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EventIcon from '@mui/icons-material/Event';
 import GroupIcon from '@mui/icons-material/Group';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import logo from './assets/logo.jpg';
 
 // Importar los componentes de cada vista (que crearás más adelante)
+import GraficaPuntaje from './components/Grafica_Puntaje.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Reportes from './pages/Reportes.jsx';
 import Admitidos from "./pages/Admitidos.jsx";
@@ -18,7 +20,7 @@ const App = () => {
     return (
         <Router>
             <Box sx={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden' }}>
-                {/* Barra lateral */}
+                
                 <Box
                     sx={{
                         width: 240,
@@ -44,6 +46,14 @@ const App = () => {
                                     <EventIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Reportes" />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemButton component={Link} to="/Graficas">
+                                <ListItemIcon sx={{ color: 'white' }}>
+                                    <BarChartIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Graficas Puntajes" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
@@ -96,6 +106,7 @@ const App = () => {
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/Reportes" element={<Reportes />} />
                         <Route path="/admitidos" element={<Admitidos />} />
+                        <Route path="/Graficas" element={<GraficaPuntaje />} />
                     </Routes>
                 </Box>
             </Box>
