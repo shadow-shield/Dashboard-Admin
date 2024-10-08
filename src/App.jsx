@@ -21,12 +21,15 @@ import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import logo from "./assets/logo.jpg";
 
 // Importar los componentes de cada vista
-import GraficaPuntaje from "./components/Grafica_Puntaje.jsx";
+import GraficaPuntaje from "./components/GraficaPuntaje.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
-import Reportes from "./pages/Reportes.jsx";
-import GraficaInst from "./components/Grafica_Instituciones.jsx";
+import Reportes from "./components/Reportes.jsx";
+
+
 import AdmitidosSexo from "./pages/AdmitidosSexo.jsx"; // Importar el nuevo componente AdmitidosSexo
 import AdmitidosPorTipo from "./pages/AdmitidosPorTipo.jsx";
+import AdmitidosInst from "./pages/AdmitidosInstuticiones.jsx";
+
 
 const App = () => {
   return (
@@ -143,10 +146,10 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/Reportes" element={<Reportes />} />
             <Route path="/Graficas" element={<GraficaPuntaje />} />
-            <Route path="/GraficaInst" element={<GraficaInst />} />
+            <Route path="//GraficaInst" element={<AdmitidosInst />} />
             <Route path="/AdmitidosSexo" element={<AdmitidosSexo />} />{" "}
             <Route path="/AdmitidosPorTipo" element={<AdmitidosPorTipo/>} />
-            {/* Nueva ruta para AdmitidosSexo */}
+            
           </Routes>
         </Box>
       </Box>

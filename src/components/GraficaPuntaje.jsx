@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 import {datosEstudiantes} from '../data/datosEstudiantes'; // Asegúrate de usar export default en datosEstudiantes.js
 
-const BarChart = () => {
+const GraficaPuntaje = () => {
   const [chartData, setChartData] = useState([]);
 
 
@@ -88,4 +88,4 @@ const BarChart = () => {
   );
 };
 
-export default BarChart;
+export default GraficaPuntaje;
