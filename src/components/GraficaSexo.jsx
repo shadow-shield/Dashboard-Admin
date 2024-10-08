@@ -10,11 +10,11 @@ const GraficaSexo = () => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    // Formatear los datos para el gráfico
+    
     setChartData(
       datosAdmitidos.map((item) => ({
-        Sexo: item.sexo, // Eje Y
-        Cantidad: item.cantidad, // Eje X
+        Sexo: item.sexo, 
+        Cantidad: item.cantidad, 
       }))
     );
   }, []);
@@ -30,7 +30,7 @@ const GraficaSexo = () => {
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
-        colors={(datum) => (datum.indexValue === "M" ? "#36a2eb" : "#ff6384")} // Colores personalizados para cada sexo
+        colors={(datum) => (datum.indexValue === "M" ? "#36a2eb" : "#800080")} 
         borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
         axisTop={null}
         axisRight={null}

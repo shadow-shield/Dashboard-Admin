@@ -1,5 +1,5 @@
 // GraficosAdmitidos.js
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { datosEstudiantes } from "../data/datosEstudiantes";
 
@@ -7,7 +7,7 @@ const GraficaAdmitidos = () => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    // Agrupar los estudiantes por tipo de admisión
+    
     const data = datosEstudiantes.reduce((acc, estudiante) => {
       const tipoAdmision = estudiante.CIRC_DESCRIPCION;
       const found = acc.find(item => item.tipoAdmision === tipoAdmision);
@@ -33,9 +33,10 @@ const GraficaAdmitidos = () => {
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
-        colors="#f4a261" // Color personalizado para las barras
+        colors="#FFD700" 
         borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
-        axisTop={null}
+        
+        
         axisRight={null}
         axisBottom={{
           tickSize: 5,
@@ -45,14 +46,7 @@ const GraficaAdmitidos = () => {
           legendPosition: "middle",
           legendOffset: 40,
         }}
-        axisLeft={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "Tipo de Admisión",
-          legendPosition: "middle",
-          legendOffset: -10,
-        }}
+        
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
