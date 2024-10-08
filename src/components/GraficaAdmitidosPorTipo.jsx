@@ -2,6 +2,7 @@
 import  { useState, useEffect } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { datosEstudiantes } from "../data/datosEstudiantes";
+import { motion } from "framer-motion";
 
 const GraficaAdmitidos = () => {
   const [chartData, setChartData] = useState([]);
@@ -23,7 +24,12 @@ const GraficaAdmitidos = () => {
   }, []);
 
   return (
-    <div style={{ height: "500px" }}>
+    <motion.div
+    style={{ height: "500px", background: "#f9f9f9", padding: "20px", borderRadius: "10px" }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1.5 }}
+  >
       <ResponsiveBar
         data={chartData}
         keys={["cantidad"]}
@@ -78,7 +84,7 @@ const GraficaAdmitidos = () => {
         motionStiffness={90}
         motionDamping={15}
       />
-    </div>
+    </motion.div>
   );
 };
 

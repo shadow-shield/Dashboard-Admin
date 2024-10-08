@@ -1,10 +1,10 @@
-import React from "react";
+
 import GraficaAdmitidos from "../components/GraficaAdmitidosPorTipo";
 
 const AdmitidosPorTipo = () => {
   return (
-    <div>
-      <h1>Admitidos Clasificados Por Tipo de Admision</h1>
+    <div >
+      <h1 style={{textAlign:"center"}}>Admitidos Clasificados Por Tipo de Admision</h1>
 
       {/* Otras secciones del dashboard si existen */}
 
