@@ -79,7 +79,6 @@ const Admitidos = () => {
                                 <TableCell sx={{ color: 'white' }}>CIRC_DESCRIPCION</TableCell>
                                 <TableCell sx={{ color: 'white' }}>ASPI_DPTORESIDENCIA</TableCell>
                                 <TableCell sx={{ color: 'white' }}>ASPI_MPIORESIDENCIA</TableCell>
-                                <TableCell sx={{ color: 'white' }}>COIN_NUMCONVOCATORIA</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -102,7 +101,6 @@ const Admitidos = () => {
                                     <TableCell>{item.CIRC_DESCRIPCION}</TableCell>
                                     <TableCell>{item.ASPI_DPTORESIDENCIA_1}</TableCell>
                                     <TableCell>{item.ASPI_MPIORESIDENCIA_1}</TableCell>
-                                    <TableCell>{item.COIN_NUMCONVOCATORIA}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
