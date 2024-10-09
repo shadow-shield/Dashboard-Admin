@@ -62,7 +62,12 @@ const App = () => {
           }}
         >
           <List>
-            
+          <ListItemButton component={Link} to="/dashboard">
+              <ListItemIcon sx={{ color: "white" }}>
+                <GroupIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
             <ListItemButton component={Link} to="/AdmitidosGeneral">
               <ListItemIcon sx={{ color: "white" }}>
                 <GroupIcon />
@@ -176,6 +181,7 @@ const App = () => {
           />
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/Reportes" element={<Reportes />} />
             <Route path="/Graficas" element={<GraficaPuntaje />} />
             <Route path="/GraficaInst" element={<AdmitidosInst />} /> {/* Corregido aquí */}
