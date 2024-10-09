@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
-import {datosEstudiantes} from '../data/datosEstudiantes'; // Asegúrate de usar export default en datosEstudiantes.js
+import { datosEstudiantes } from '../data/datosEstudiantes'; // Asegúrate de usar export default en datosEstudiantes.js
 
 const GraficaPuntaje = () => {
   const [chartData, setChartData] = useState([]);
@@ -8,39 +8,39 @@ const GraficaPuntaje = () => {
 
   useEffect(() => {
     setChartData(datosEstudiantes.map(item => ({
-      Nombre: item['NOMBRE Y APELLIDO'].replace(' ', ' '), 
-      Puntaje: item['PRXF_PUNTAJEOBTENIDO'] 
+      Nombre: item['NOMBRE Y APELLIDO'].replace(' ', ' '),
+      Puntaje: item['PRXF_PUNTAJEOBTENIDO']
     })));
   }, []);
 
-  
+
   const getColor = (nombre) => {
     const colors = {
-      'Juan Pérez': '#ff6384', 
-      'Ana Gómez': '#36a2eb',  
-      
+      'Juan Pérez': '#ff6384',
+      'Ana Gómez': '#36a2eb',
+
     };
-    return colors[nombre] || '#4caf50'; 
+    return colors[nombre] || '#4caf50';
   };
 
   return (
     <div style={{ height: '500px' }}>
       <ResponsiveBar
         data={chartData}
-        keys={['Puntaje']}  
-        indexBy="Nombre"    
+        keys={['Puntaje']}
+        indexBy="Nombre"
         margin={{ top: 60, right: 130, bottom: 100, left: 60 }}
         padding={0.3}
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
-        colors={(bar) => getColor(bar.id)} 
+        colors={(bar) => getColor(bar.id)}
         borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
         axisTop={null}
         axisRight={null}
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: -45, 
+          tickRotation: -45,
           legend: 'Estudiante',
           legendPosition: 'middle',
           legendOffset: 70

@@ -5,7 +5,7 @@ import Admitidos from "../components/Admitidos"
 const AdmitidosGeneral = () => {
   return (
     <div >
-        <div style={{textAlign:"center"}}>AdmitidosGeneral</div>
+        <h1 style={{textAlign:"center"}}>Admitidos General </h1>
         <div>
             <Admitidos />
         </div>

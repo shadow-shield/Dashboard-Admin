@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import {
     Table,
     TableBody,
@@ -11,14 +11,14 @@ import {
     TextField,
     InputAdornment,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search'; 
-import {datosEstudiantes} from '../data/datosEstudiantes'; 
+import SearchIcon from '@mui/icons-material/Search';
+import { datosEstudiantes } from '../data/datosEstudiantes';
 
 const Admitidos = () => {
-    const [admitidos, ] = useState(datosEstudiantes);
+    const [admitidos,] = useState(datosEstudiantes);
     const [searchTerm, setSearchTerm] = useState('');
 
-    
+
     const filteredAdmitidos = admitidos.filter((item) => {
         const values = Object.values(item);
         return values.some((value) =>
@@ -35,11 +35,11 @@ const Admitidos = () => {
                 fullWidth
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ width: '300px' }} 
+                style={{ width: '300px' }}
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <SearchIcon /> 
+                            <SearchIcon />
                         </InputAdornment>
                     ),
                 }}
