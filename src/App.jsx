@@ -10,7 +10,7 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+
 import EventIcon from "@mui/icons-material/Event";
 import GroupIcon from "@mui/icons-material/Group";
 /* import BarChartIcon from "@mui/icons-material/BarChart"; */
@@ -28,7 +28,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Reportes from "./components/Reportes.jsx";
 
 
-import AdmitidosSexo from "./pages/AdmitidosSexo.jsx"; 
+import AdmitidosSexo from "./pages/AdmitidosSexo.jsx";
 import AdmitidosPorTipo from "./pages/AdmitidosPorTipo.jsx";
 import AdmitidosInst from "./pages/AdmitidosInstuticiones.jsx";
 import AdmitidosGeneral from "./pages/AdmitidosGeneral.jsx";
@@ -36,6 +36,7 @@ import StackedBarChartOutlinedIcon from '@mui/icons-material/StackedBarChartOutl
 import AdmitidosEstadoCivil from "./pages/AdmitidosEstadoCivil.jsx";
 import AlignVerticalBottomTwoToneIcon from '@mui/icons-material/AlignVerticalBottomTwoTone';
 import AdmitidosDepartamentos from "./pages/AdmitidosDepartamentos.jsx";
+import AdmitidosMunicipio from "./pages/AdmitidosMunicipio.jsx";
 
 
 const App = () => {
@@ -61,14 +62,7 @@ const App = () => {
           }}
         >
           <List>
-            <ListItem disablePadding>
-              <ListItemButton component={Link} to="/dashboard">
-                <ListItemIcon sx={{ color: "white" }}>
-                  <DashboardIcon />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItemButton>
-            </ListItem>
+            
             <ListItemButton component={Link} to="/AdmitidosGeneral">
               <ListItemIcon sx={{ color: "white" }}>
                 <GroupIcon />
@@ -120,10 +114,17 @@ const App = () => {
                 <ListItemIcon sx={{ color: "white" }}>
                   <DataSaverOffIcon />
                 </ListItemIcon>
-                <ListItemText primary="Admitidos Por Departamento" />
+                <ListItemText primary="Admitidos Clasificacion Departamento" />
               </ListItemButton>
             </ListItem>
-            
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/AdmitidoMuni">
+                <ListItemIcon sx={{ color: "white" }}>
+                  <DataSaverOffIcon />
+                </ListItemIcon>
+                <ListItemText primary="Admitidos Clasificacion Municipio" />
+              </ListItemButton>
+            </ListItem>
             <ListItem disablePadding>
               <ListItemButton component={Link} to="/Reportes">
                 <ListItemIcon sx={{ color: "white" }}>
@@ -174,17 +175,18 @@ const App = () => {
             style={{ position: "absolute", top: 20, right: 20, width: "100px" }}
           />
           <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/Reportes" element={<Reportes />} />
             <Route path="/Graficas" element={<GraficaPuntaje />} />
-            <Route path="//GraficaInst" element={<AdmitidosInst />} />
+            <Route path="/GraficaInst" element={<AdmitidosInst />} /> {/* Corregido aquí */}
             <Route path="/AdmitidosGeneral" element={<AdmitidosGeneral />} />
-            <Route path="/AdmitidosSexo" element={<AdmitidosSexo />} />{" "}
+            <Route path="/AdmitidosSexo" element={<AdmitidosSexo />} />
             <Route path="/AdmitidosPorTipo" element={<AdmitidosPorTipo />} />
             <Route path="/AdmitidosPorEstado" element={<AdmitidosEstadoCivil />} />
             <Route path="/AdmitidosPorDepar" element={<AdmitidosDepartamentos />} />
-
+            <Route path="/AdmitidoMuni" element={<AdmitidosMunicipio />} />
           </Routes>
+
         </Box>
       </Box>
     </Router>

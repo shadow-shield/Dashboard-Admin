@@ -56,10 +56,10 @@ const GraficoAdmitidosPorDepartamento = () => {
             padAngle={0.7}
             cornerRadius={1}
             activeOuterRadiusOffset={8}
-            colors={customColors} // Usa colores personalizados
+            colors={customColors} 
             borderWidth={2}
             borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-            arcLinkLabel={(d) => `${d.id}: ${d.value}`} // Muestra el departamento y la cantidad
+            arcLinkLabel={(d) => `${d.id}: ${d.value}`} 
             arcLinkLabelsSkipAngle={5}
             arcLinkLabelsTextColor="#333333"
             arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
