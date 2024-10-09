@@ -30,11 +30,11 @@ const GraficoAdmitidosPorDepartamento = () => {
   }, []);
 
   const customColors = [
-    '#ff6b6b', // Rojo
-    '#4ecdc4', // Verde
-    '#1a535c', // Azul oscuro
-    '#ffe66d', // Amarillo
-    '#ff9f1c', // Naranja
+    '#ff6b6b', 
+    '#4ecdc4', 
+    '#1a535c', 
+    '#ffe66d',
+    '#ff9f1c', 
   ];
 
   return (
