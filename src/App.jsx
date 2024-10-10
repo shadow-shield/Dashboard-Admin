@@ -25,7 +25,7 @@ import logo from "./assets/logo.jpg";
 // Importar los componentes de cada vista
 import GraficaPuntaje from "./components/GraficaPuntaje.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
-import Reportes from "./components/Reportes.jsx";
+
 
 
 import AdmitidosSexo from "./pages/AdmitidosSexo.jsx";
@@ -37,6 +37,7 @@ import AdmitidosEstadoCivil from "./pages/AdmitidosEstadoCivil.jsx";
 import AlignVerticalBottomTwoToneIcon from '@mui/icons-material/AlignVerticalBottomTwoTone';
 import AdmitidosDepartamentos from "./pages/AdmitidosDepartamentos.jsx";
 import AdmitidosMunicipio from "./pages/AdmitidosMunicipio.jsx";
+import ReportesEstudiantes from "./pages/Reportes.jsx";
 
 
 const App = () => {
@@ -182,7 +183,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/Reportes" element={<Reportes />} />
+            <Route path="/Reportes" element={<ReportesEstudiantes />} />
             <Route path="/Graficas" element={<GraficaPuntaje />} />
             <Route path="/GraficaInst" element={<AdmitidosInst />} /> {/* Corregido aquí */}
             <Route path="/AdmitidosGeneral" element={<AdmitidosGeneral />} />
