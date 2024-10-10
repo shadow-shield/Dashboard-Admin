@@ -1,67 +1,67 @@
 import { useState, useEffect, useRef } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
-import { datosEstudiantes } from '../data/datosEstudiantes';
 import { Card, CardContent, Box, Button } from '@mui/material';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
 
-const ReporteGraficas = () => {
+const ReporteGraficasMuni = ({ datos, indexBy, title, valueKey, isPercentage = true }) => {
   const [chartData, setChartData] = useState([]);
   const chartRef = useRef();
 
   useEffect(() => {
-    const estudiantesPorMunicipio = datosEstudiantes.reduce((acc, item) => {
-      let municipioOriginal = item['ASPI_MPIORESIDENCIA_1'];
+    
+    if (typeof indexBy !== 'string') {
+      console.error('indexBy no es una cadena:', indexBy);
+      return; 
+    }
 
-      const municipio = municipioOriginal.length > 8 ? `${municipioOriginal.substring(0, 8)}...` : municipioOriginal;
+    const processedData = datos.reduce((acc, item) => {
+      const key = item[indexBy].length > 8 ? `${item[indexBy].substring(0, 8)}...` : item[indexBy];
 
-      if (acc[municipio]) {
-        acc[municipio] += 1;
+      if (acc[key]) {
+        acc[key] += 1;
       } else {
-        acc[municipio] = 1;
+        acc[key] = 1;
       }
       return acc;
     }, {});
 
-    const totalEstudiantes = datosEstudiantes.length;
+    const total = datos.length;
 
-    const data = Object.entries(estudiantesPorMunicipio).map(([key, value]) => ({
-      municipio: key,
-      porcentaje: ((value / totalEstudiantes) * 100).toFixed(2),
+    const data = Object.entries(processedData).map(([key, value]) => ({
+      [indexBy]: key,
+      [valueKey]: isPercentage ? ((value / total) * 100).toFixed(2) : value,
     }));
 
     setChartData(data);
-  }, []);
+  }, [datos, indexBy, valueKey, isPercentage]);
 
   const generarPDF = () => {
     const pdf = new jsPDF('landscape', 'pt', 'a4');
 
-    
     html2canvas(chartRef.current).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const imgWidth = pdf.internal.pageSize.getWidth();
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-
-      
       pdf.addPage();
 
-      // Configurar los datos de la tabla
-      const tableData = chartData.map(item => [item.municipio, item.porcentaje]);
-      const columns = ['Municipio', 'Porcentaje (%)'];
+      const tableData = chartData.map(item => [item[indexBy], item[valueKey]]);
+      const columns = [indexBy, isPercentage ? 'Porcentaje (%)' : 'Cantidad'];
 
-      // Generar la tabla
       pdf.autoTable({
         head: [columns],
         body: tableData,
         startY: 10,
-        theme: 'grid',
+        theme: 'grid',headStyles: {
+            fillColor: "green", // Color de fondo (RGB)
+            textColor: [255, 255, 255], // Color del texto (RGB)
+          }
       });
 
-      // Guardar el PDF
-      pdf.save('reporte_graficas.pdf');
+      pdf.save(`${title}.pdf`);
     });
   };
 
@@ -81,20 +81,20 @@ const ReporteGraficas = () => {
             <div style={{ height: '500px' }}>
               <ResponsiveBar
                 data={chartData}
-                keys={['porcentaje']}
-                indexBy="municipio"
+                keys={[valueKey]}
+                indexBy={indexBy}
                 layout="vertical"
                 margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-                padding={0.3}
+                padding={0.7}
                 valueScale={{ type: 'linear' }}
                 indexScale={{ type: 'band', round: true }}
-                colors={['#FFA500']}
+                colors={["#C44527"]}
                 borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
                 axisLeft={{
                   tickSize: 5,
                   tickPadding: 5,
                   tickRotation: 0,
-                  legend: 'Porcentaje de Estudiantes (%)',
+                  legend: isPercentage ? 'Porcentaje (%)' : 'Cantidad',
                   legendPosition: 'middle',
                   legendOffset: -40,
                 }}
@@ -102,7 +102,7 @@ const ReporteGraficas = () => {
                   tickSize: 5,
                   tickPadding: 5,
                   tickRotation: 0,
-                  legend: 'Municipios',
+                  legend: indexBy.charAt(0).toUpperCase() + indexBy.slice(1),
                   legendPosition: 'middle',
                   legendOffset: 40,
                 }}
@@ -110,12 +110,12 @@ const ReporteGraficas = () => {
                 labelSkipHeight={12}
                 labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
                 enableLabel={true}
-                label={({ value }) => `${value}%`}
+                label={({ value }) => `${value}${isPercentage ? '%' : ''}`}
               />
             </div>
           </div>
           <Button variant="contained" color="success" onClick={generarPDF} sx={{ mt: 2 }}>
-            Exportar Grafica
+            Exportar Gráfica
           </Button>
         </Box>
       </CardContent>
@@ -123,4 +123,4 @@ const ReporteGraficas = () => {
   );
 };
 
-export default ReporteGraficas;
+export default ReporteGraficasMuni;

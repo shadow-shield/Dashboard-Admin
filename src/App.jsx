@@ -192,6 +192,7 @@ const App = () => {
             <Route path="/AdmitidosPorEstado" element={<AdmitidosEstadoCivil />} />
             <Route path="/AdmitidosPorDepar" element={<AdmitidosDepartamentos />} />
             <Route path="/AdmitidoMuni" element={<AdmitidosMunicipio />} />
+            
           </Routes>
 
         </Box>

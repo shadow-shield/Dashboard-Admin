@@ -1,12 +1,21 @@
 import ReporteGraficas from "../components/ReporteGraficas";
+import { datosEstudiantes } from "../data/datosEstudiantes";
 
 
 const ReportesEstudiantes = () => {
     return (
         <div>
-            <div>
-                <ReporteGraficas />
-            </div>
+
+
+            <ReporteGraficas
+                datos={datosEstudiantes}
+                indexBy="ESTRATO"
+                title="Reporte de Estudiantes por Municipio"
+                valueKey="value"
+                isPercentage={false}
+            />
+            
+
         </div>
     );
 };
