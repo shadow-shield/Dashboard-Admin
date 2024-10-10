@@ -27,7 +27,7 @@ const GraficaSexo = () => {
 
         <div
           style={{
-            height: "500px",
+            height: "600px",
             background: "white",
             padding: "20px",
             borderRadius: "10px",
@@ -37,9 +37,9 @@ const GraficaSexo = () => {
             data={chartData}
             keys={["Cantidad"]}
             indexBy="Sexo"
-            layout="horizontal"
-            margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-            padding={0.4}
+            layout="vertical" 
+            margin={{ top: 50, right: 120, bottom: 50, left: 60 }}
+            padding={0.7}
             valueScale={{ type: "linear" }}
             indexScale={{ type: "band", round: true }}
             colors={(datum) => (datum.indexValue === "M" ? "#36a2eb" : "#800080")}
@@ -50,7 +50,7 @@ const GraficaSexo = () => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "Cantidad de Admitidos",
+              legend: "Sexo",
               legendPosition: "middle",
               legendOffset: 40,
             }}
@@ -58,7 +58,7 @@ const GraficaSexo = () => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "Sexo",
+              legend: "Cantidad de Admitidos",
               legendPosition: "middle",
               legendOffset: -40,
             }}

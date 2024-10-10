@@ -8,13 +8,13 @@ import GraficoAdmitidosPorDepartamento from '../components/GraficoAdminidoPorDep
 const Dashboard = () => {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 5, justifyContent: 'center' }}>
-      <Box sx={{ width: '45%', height: '400px' }}>
+      <Box sx={{ width: '45%', height: '700px' }}>
         <GraficaEstadoCivil /> 
       </Box>
       <Box sx={{ width: '45%', height: '500px' }}>
         <GraficoAdmitidosPorDepartamento/>
       </Box>
-      <Box sx={{ width: '45%', height: '600px' }}>
+      <Box sx={{ width: '45%', height: '700px' }}>
         <GraficaSexo /> 
       </Box>
       <Box sx={{ width: '45%', height: '400px' }}>

@@ -28,7 +28,7 @@ const GraficaAdmitidos = () => {
         
         <div
           style={{
-            height: "500px",
+            height: "600px",
             background: "white",
             padding: "20px",
             borderRadius: "10px",

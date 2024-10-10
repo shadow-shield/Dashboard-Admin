@@ -36,7 +36,7 @@ const GraficaEstadoCivil = () => {
        
         <Box sx={{ width: '100%', textAlign: 'center', mt: 5 }}>
 
-          <div style={{ height: '400px' }}>
+          <div style={{ height: '600px' }}>
             <ResponsiveBar
               data={chartData}
               keys={['admitidos']}
