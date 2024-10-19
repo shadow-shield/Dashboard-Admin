@@ -56,8 +56,8 @@ const ReporteGraficasMuni = ({ datos, indexBy, title, valueKey, isPercentage = t
         body: tableData,
         startY: 10,
         theme: 'grid',headStyles: {
-            fillColor: "green", // Color de fondo (RGB)
-            textColor: [255, 255, 255], // Color del texto (RGB)
+            fillColor: "green", 
+            textColor: [255, 255, 255], 
           }
       });
 

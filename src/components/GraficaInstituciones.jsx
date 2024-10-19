@@ -8,7 +8,7 @@ const GraficaInst = () => {
 
   useEffect(() => {
     const instituciones = datosEstudiantes.reduce((acc, item) => {
-      const institucion = item['INST_NOMBREINSTITUCION']; // Cambia el nombre del campo si es necesario
+      const institucion = item['INST_NOMBREINSTITUCION'];
       if (acc[institucion]) {
         acc[institucion] += 1;
       } else {
