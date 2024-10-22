@@ -1,5 +1,4 @@
 // src/App.jsx
-// src/App.jsx
 
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import {
@@ -37,6 +36,8 @@ import AlignVerticalBottomTwoToneIcon from "@mui/icons-material/AlignVerticalBot
 import AdmitidosDepartamentos from "./pages/AdmitidosDepartamentos.jsx";
 import AdmitidosMunicipio from "./pages/AdmitidosMunicipio.jsx";
 import ReportesEstudiantes from "./pages/Reportes.jsx";
+import Configuracion from "./components/configuracion.jsx";
+import "./index.css";
 
 const App = () => {
   return (
@@ -149,6 +150,7 @@ const App = () => {
                 <ListItemText primary="Configuración" />
               </ListItemButton>
             </ListItem>
+
             <ListItem disablePadding>
               <ListItemButton component={Link} to="/desconectar">
                 <ListItemIcon sx={{ color: "white" }}>
@@ -180,6 +182,7 @@ const App = () => {
           />
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/configuracion" element={<Configuracion />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/Reportes" element={<ReportesEstudiantes />} />
             <Route path="/Graficas" element={<GraficaPuntaje />} />
