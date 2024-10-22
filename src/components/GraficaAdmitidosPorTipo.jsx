@@ -1,11 +1,14 @@
 // GraficosAdmitidos.js
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { datosEstudiantes } from "../data/datosEstudiantes";
-import { Card, CardContent } from '@mui/material';
+import { Card, CardContent, Button } from '@mui/material';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const GraficaAdmitidos = () => {
   const [chartData, setChartData] = useState([]);
+  const chartRef = useRef(null);
 
   useEffect(() => {
     const data = datosEstudiantes.reduce((acc, estudiante) => {
@@ -22,11 +25,21 @@ const GraficaAdmitidos = () => {
     setChartData(data);
   }, []);
 
+  const handleExportPDF = () => {
+    const input = chartRef.current;
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("landscape");
+      pdf.addImage(imgData, "PNG", 10, 10, 280, 150);
+      pdf.save("grafica_admitidos.pdf");
+    });
+  };
+
   return (
     <Card elevation={3} sx={{ margin: 2, borderRadius: 4 }}>
       <CardContent>
-        
         <div
+          ref={chartRef}
           style={{
             height: "600px",
             background: "white",
@@ -85,6 +98,15 @@ const GraficaAdmitidos = () => {
             motionStiffness={90}
             motionDamping={15}
           />
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          <Button 
+            variant="contained" 
+            color="success" 
+            onClick={handleExportPDF}
+          >
+            Exportar Gráfica
+          </Button>
         </div>
       </CardContent>
     </Card>
