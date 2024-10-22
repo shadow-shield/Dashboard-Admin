@@ -63,11 +63,11 @@ const GraficoAdmitidosPorDepartamento = () => {
               colors={customColors}
               borderWidth={2}
               borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-              arcLinkLabel={(d) => `${d.id}: ${d.value}%`} // Mostrar el porcentaje en la etiqueta externa
+              arcLinkLabel={(d) => `${d.id}: ${d.value}%`} 
               arcLinkLabelsSkipAngle={5}
               arcLinkLabelsTextColor="#333333"
               arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-              arcLabel={(d) => `${d.value}%`} // Mostrar el porcentaje dentro del gráfico
+              arcLabel={(d) => `${d.value}%`} 
               legends={[
                 {
                   anchor: 'bottom',
