@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -52,6 +52,7 @@ const UploadJsonFile = () => {
 
       setUploadStatus("Archivo subido exitosamente.");
       setAlertType("success");
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setUploadStatus(
         "Error al subir el archivo. Por favor, intenta nuevamente."
