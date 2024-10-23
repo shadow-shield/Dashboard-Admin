@@ -24,7 +24,7 @@ import StackedBarChartOutlinedIcon from "@mui/icons-material/StackedBarChartOutl
 
 import logo from "./assets/logo.jpg";
 
-// Importar los componentes de cada vista
+
 import GraficaPuntaje from "./components/GraficaPuntaje.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import AdmitidosSexo from "./pages/AdmitidosSexo.jsx";
@@ -34,15 +34,16 @@ import AdmitidosGeneral from "./pages/AdmitidosGeneral.jsx";
 import AdmitidosEstadoCivil from "./pages/AdmitidosEstadoCivil.jsx";
 import AdmitidosDepartamentos from "./pages/AdmitidosDepartamentos.jsx";
 import AdmitidosMunicipio from "./pages/AdmitidosMunicipio.jsx";
-import ReportesEstudiantes from "./pages/Estratos.jsx";
+import ReportEstratos from "./pages/AdmitidosEstratos.jsx";
+
 import Configuracion from "./components/configuracion.jsx";
 import "./index.css";
 
 const App = () => {
-  const [activeItem, setActiveItem] = useState(""); // Estado para el item activo
+  const [activeItem, setActiveItem] = useState(""); 
 
   const handleItemClick = (item) => {
-    setActiveItem(item); // Actualiza el item activo al hacer clic
+    setActiveItem(item); 
   };
 
   return (
@@ -225,7 +226,7 @@ const App = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/configuracion" element={<Configuracion />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/Estratos" element={<ReportesEstudiantes />} />
+            <Route path="/Estratos" element={<ReportEstratos />} />
             <Route path="/Graficas" element={<GraficaPuntaje />} />
             <Route path="/GraficaInst" element={<AdmitidosInst />} />
             <Route path="/AdmitidosGeneral" element={<AdmitidosGeneral />} />

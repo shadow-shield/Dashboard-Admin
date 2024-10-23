@@ -1,13 +1,16 @@
-// GraficoAdmitidosPorDepartamento.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ResponsivePie } from '@nivo/pie';
-import { Card, CardContent, Box } from '@mui/material';
+import { Card, CardContent, Box, Button } from '@mui/material';
 import { datosEstudiantes } from '../data/datosEstudiantes';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import 'jspdf-autotable';
 
 const datosAdmitidos = datosEstudiantes;
 
 const GraficoAdmitidosPorDepartamento = () => {
   const [chartData, setChartData] = useState([]);
+  const chartRef = useRef();
 
   useEffect(() => {
     const admitidosPorDepartamento = datosAdmitidos.reduce((acc, item) => {
@@ -20,14 +23,12 @@ const GraficoAdmitidosPorDepartamento = () => {
       return acc;
     }, {});
 
-    // Calcular el total de admitidos
     const totalAdmitidos = datosAdmitidos.length;
 
-    // Convertir la cantidad a porcentaje
     const data = Object.entries(admitidosPorDepartamento).map(([key, value]) => ({
       id: key,
       label: key,
-      value: ((value / totalAdmitidos) * 100).toFixed(2), // Convertir a porcentaje
+      value: ((value / totalAdmitidos) * 100).toFixed(2),
     }));
 
     setChartData(data);
@@ -41,16 +42,46 @@ const GraficoAdmitidosPorDepartamento = () => {
     '#ff9f1c',
   ];
 
+  const generarPDF = () => {
+    const pdf = new jsPDF('landscape', 'pt', 'a4');
+
+    html2canvas(chartRef.current).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = pdf.internal.pageSize.getWidth();
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.addPage();
+
+      const tableData = chartData.map(item => [item.id, item.value]);
+      const columns = ['Departamento', 'Porcentaje (%)'];
+
+      pdf.autoTable({
+        head: [columns],
+        body: tableData,
+        startY: 10,
+        theme: 'grid',
+        headStyles: {
+          fillColor: 'green',
+          textColor: [255, 255, 255],
+        },
+      });
+
+      pdf.save('AdmitidosPorDepartamento.pdf');
+    });
+  };
+
   return (
-    <Card elevation={3} sx={{ margin: 2, borderRadius: 4 }}>
+    <Card elevation={3} sx={{ margin: 5, borderRadius: 4 ,marginTop:2.1}}>
       <CardContent>
         <Box sx={{ width: '100%', textAlign: 'center', mt: 5 }}>
           <div
+            ref={chartRef}
             style={{
-              height: "600px",
-              background: "white",
-              padding: "20px",
-              borderRadius: "10px",
+              height: '600px',
+              background: 'white',
+              padding: '20px',
+              borderRadius: '10px',
             }}
           >
             <ResponsivePie
@@ -63,11 +94,11 @@ const GraficoAdmitidosPorDepartamento = () => {
               colors={customColors}
               borderWidth={2}
               borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-              arcLinkLabel={(d) => `${d.id}: ${d.value}%`} 
+              arcLinkLabel={(d) => `${d.id}: ${d.value}%`}
               arcLinkLabelsSkipAngle={5}
               arcLinkLabelsTextColor="#333333"
               arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-              arcLabel={(d) => `${d.value}%`} 
+              arcLabel={(d) => `${d.value}%`}
               legends={[
                 {
                   anchor: 'bottom',
@@ -96,6 +127,14 @@ const GraficoAdmitidosPorDepartamento = () => {
               ]}
             />
           </div>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={generarPDF}
+            sx={{ mt: 2 }}
+          >
+            Exportar Gráfica
+          </Button>
         </Box>
       </CardContent>
     </Card>

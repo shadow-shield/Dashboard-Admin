@@ -1,28 +1,18 @@
-import { useState, useEffect, useRef }      from 'react';
-import { ResponsiveBar }                    from '@nivo/bar';
-import { datosEstudiantes }                 from '../data/datosEstudiantes';
-import { Card, CardContent, Box, Button }   from '@mui/material';
-import html2canvas                          from 'html2canvas';
-import jsPDF                                from 'jspdf';
+import { useState, useEffect, useRef } from 'react';
+import { ResponsiveBar } from '@nivo/bar';
+import { datosEstudiantes } from '../data/datosEstudiantes';
+import { Card, CardContent, Box, Button } from '@mui/material';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const GraficoEstudiantesPorMunicipio = () => {
     const [chartData, setChartData] = useState([]);
     const chartRef = useRef();
 
-    const generarPDF = () => {
-        const input = chartRef.current;
-        html2canvas(input).then((canvas) => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('landscape');
-            pdf.addImage(imgData, 'PNG', 10, 10, 280, 150);
-            pdf.save('grafica-municipios.pdf');
-        });
-    };
-
     useEffect(() => {
         const estudiantesPorMunicipio = datosEstudiantes.reduce((acc, item) => {
             let municipioOriginal = item['ASPI_MPIORESIDENCIA_1'];
-
             const municipio = municipioOriginal.length > 8 ? `${municipioOriginal.substring(0, 8)}...` : municipioOriginal;
 
             if (acc[municipio]) {
@@ -42,6 +32,36 @@ const GraficoEstudiantesPorMunicipio = () => {
 
         setChartData(data);
     }, []);
+
+    const generarPDF = () => {
+        const pdf = new jsPDF('landscape', 'pt', 'a4');
+
+        html2canvas(chartRef.current).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = pdf.internal.pageSize.getWidth();
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+            pdf.addPage();
+
+            // Generar la tabla de datos
+            const tableData = chartData.map(item => [item.municipio, item.porcentaje]);
+            const columns = ['Municipio', 'Porcentaje (%)'];
+
+            pdf.autoTable({
+                head: [columns],
+                body: tableData,
+                startY: 10,
+                theme: 'grid',
+                headStyles: {
+                    fillColor: "green",
+                    textColor: [255, 255, 255],
+                }
+            });
+
+            pdf.save('grafica-municipios.pdf');
+        });
+    };
 
     return (
         <Card elevation={3} sx={{ margin: 2, borderRadius: 4 }}>

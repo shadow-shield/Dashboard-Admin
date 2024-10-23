@@ -4,13 +4,13 @@ import { Card, CardContent, Box, Button } from '@mui/material';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
+import PropTypes from 'prop-types'; 
 
-const ReporteGraficasMuni = ({ datos, indexBy, title, valueKey, isPercentage = true }) => {
+const GraficaEstratos = ({ datos, indexBy, title, valueKey, isPercentage = true }) => {
   const [chartData, setChartData] = useState([]);
   const chartRef = useRef();
 
   useEffect(() => {
-    
     if (typeof indexBy !== 'string') {
       console.error('indexBy no es una cadena:', indexBy);
       return; 
@@ -123,4 +123,13 @@ const ReporteGraficasMuni = ({ datos, indexBy, title, valueKey, isPercentage = t
   );
 };
 
-export default ReporteGraficasMuni;
+//NO se confundan con esto es por por props
+GraficaEstratos.propTypes = {
+  datos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  indexBy: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  valueKey: PropTypes.string.isRequired, 
+  isPercentage: PropTypes.bool,
+};
+
+export default GraficaEstratos;

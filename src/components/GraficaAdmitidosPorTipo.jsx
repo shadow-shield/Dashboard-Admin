@@ -5,6 +5,7 @@ import { datosEstudiantes } from "../data/datosEstudiantes";
 import { Card, CardContent, Button } from '@mui/material';
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import 'jspdf-autotable';
 
 const GraficaAdmitidos = () => {
   const [chartData, setChartData] = useState([]);
@@ -27,21 +28,46 @@ const GraficaAdmitidos = () => {
 
   const handleExportPDF = () => {
     const input = chartRef.current;
+
+    const pdf = new jsPDF('landscape');
+
+
     html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("landscape");
-      pdf.addImage(imgData, "PNG", 10, 10, 280, 150);
+      const imgWidth = pdf.internal.pageSize.getWidth();
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+
+      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+      pdf.addPage();
+
+      const tableData = chartData.map(item => [item.tipoAdmision, item.cantidad]);
+      const columns = ['Tipo de Admisión', 'Cantidad'];
+
+
+      pdf.autoTable({
+        head: [columns],
+        body: tableData,
+        startY: 10,
+        theme: 'grid',
+        headStyles: {
+          fillColor: "green",
+          textColor: [255, 255, 255],
+        },
+      });
+
+      // Guardar el PDF
       pdf.save("grafica_admitidos.pdf");
     });
   };
 
   return (
-    <Card elevation={3} sx={{ margin: 2, borderRadius: 4 }}>
+    <Card elevation={3} sx={{ margin:"40px 40px 30px", borderRadius: 4, marginTop:'15px',marginBottom:'85px'}}>
       <CardContent>
         <div
           ref={chartRef}
           style={{
-            height: "600px",
+            height: "636px",
             background: "white",
             padding: "20px",
             borderRadius: "10px",
@@ -100,9 +126,9 @@ const GraficaAdmitidos = () => {
           />
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-          <Button 
-            variant="contained" 
-            color="success" 
+          <Button
+            variant="contained"
+            color="success"
             onClick={handleExportPDF}
           >
             Exportar Gráfica

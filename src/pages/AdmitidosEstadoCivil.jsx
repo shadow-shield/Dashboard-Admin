@@ -1,13 +1,20 @@
-import GraficaEstadoCivil from "../components/GraficaEstadoCivil"
+/* import GraficaEstadoCivil from "../components/GraficaEstadoCivil" */
+import GraficaEstadoC from "../components/GraficaEstadoC"
+import { datosEstudiantes } from "../data/datosEstudiantes";
 
 
 const AdmitidosEstadoCivil = () => {
   return (
     <div >
-        <h1 style={{textAlign:"center"}}>ADMITIDOS CLASIFICADOS POR ESTADO CIVIL
-        </h1>
+        
         <div>
-            <GraficaEstadoCivil />
+            <GraficaEstadoC 
+            datos={datosEstudiantes}
+            indexBy="ESTADO_CIVIL"
+            title="Reporte Estado Civil"
+            valueKey="value"
+            isPercentage={false}
+            />
         </div>
     </div>
   )

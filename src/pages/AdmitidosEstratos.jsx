@@ -1,16 +1,16 @@
-import ReporteGraficas from "../components/ReporteGraficas";
+import GraficaEstratos from "../components/GraficaEstratos";
 import { datosEstudiantes } from "../data/datosEstudiantes";
 
 
-const ReportesEstudiantes = () => {
+const ReportEstratos = () => {
     return (
         <div>
 
 
-            <ReporteGraficas
+            <GraficaEstratos
                 datos={datosEstudiantes}
                 indexBy="ESTRATO"
-                title="Reporte de Estudiantes por Municipio"
+                title="Reporte Estratos"
                 valueKey="value"
                 isPercentage={false}
             />
@@ -20,4 +20,4 @@ const ReportesEstudiantes = () => {
     );
 };
 
-export default ReportesEstudiantes;
+export default ReportEstratos;

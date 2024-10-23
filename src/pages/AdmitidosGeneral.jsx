@@ -5,7 +5,9 @@ import Admitidos from "../components/Admitidos"
 const AdmitidosGeneral = () => {
   return (
     <div >
-        <h1 style={{textAlign:"center"}}>Admitidos General </h1>
+       <h1 className="text-4xl font-bold text-center text-green-800 mt-8 mb-4">
+      INFORMACION ADMITIDOS
+    </h1>
         <div>
             <Admitidos />
         </div>

@@ -1,8 +1,10 @@
 import { Box } from '@mui/material'; 
-import GraficaEstadoCivil from '../components/GraficaEstadoCivil';
+
 import GraficaSexo from '../components/GraficaSexo';
 import GraficaAdmitidos from '../components/GraficaAdmitidosPorTipo';
 import GraficoAdmitidosPorDepartamento from '../components/GraficoAdminidoPorDepartamentoDeResidencia';
+
+import AdmitidosEstadoCivil from './AdmitidosEstadoCivil';
 
 const Dashboard = () => {
   return (
@@ -17,8 +19,8 @@ const Dashboard = () => {
 
       {/* Gráficas */}
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 5, justifyContent: 'center' }}>
-        <Box sx={{ width: { xs: '100%', sm: '45%' }, height: '700px' }}>
-          <GraficaEstadoCivil /> 
+        <Box sx={{ width: { xs: '100%', sm: '45%' }, height: '800px' }}>
+         <AdmitidosEstadoCivil />
         </Box>
         <Box sx={{ width: { xs: '100%', sm: '45%' }, height: '500px' }}>
           <GraficoAdmitidosPorDepartamento />
