@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
-import { datosEstudiantes } from '../data/datosEstudiantes';
 import { Card, CardContent, Box, Button } from '@mui/material';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -11,26 +10,32 @@ const GraficoEstudiantesPorMunicipio = () => {
     const chartRef = useRef();
 
     useEffect(() => {
-        const estudiantesPorMunicipio = datosEstudiantes.reduce((acc, item) => {
-            let municipioOriginal = item['ASPI_MPIORESIDENCIA_1'];
-            const municipio = municipioOriginal.length > 8 ? `${municipioOriginal.substring(0, 8)}...` : municipioOriginal;
+        const savedData = localStorage.getItem('datosEstudiantes');
 
-            if (acc[municipio]) {
-                acc[municipio] += 1;
-            } else {
-                acc[municipio] = 1;
-            }
-            return acc;
-        }, {});
+        if ( savedData ) {
+            const datosEstudiantes = JSON.parse(savedData);
 
-        const totalEstudiantes = datosEstudiantes.length;
+            const estudiantesPorMunicipio = datosEstudiantes.reduce((acc, item) => {
+                let municipioOriginal = item['ASPI_MPIORESIDENCIA.1'];
+                const municipio = municipioOriginal.length > 8 ? `${municipioOriginal.substring(0, 8)}...` : municipioOriginal;
 
-        const data = Object.entries(estudiantesPorMunicipio).map(([key, value]) => ({
-            municipio: key,
-            porcentaje: ((value / totalEstudiantes) * 100).toFixed(2),
-        }));
+                if (acc[municipio]) {
+                    acc[municipio] += 1;
+                } else {
+                    acc[municipio] = 1;
+                }
+                return acc;
+            }, {});
 
-        setChartData(data);
+            const totalEstudiantes = datosEstudiantes.length;
+
+            const data = Object.entries(estudiantesPorMunicipio).map(([key, value]) => ({
+                municipio: key,
+                porcentaje: ((value / totalEstudiantes) * 100).toFixed(2),
+            }));
+
+            setChartData(data);
+        }
     }, []);
 
     const generarPDF = () => {
