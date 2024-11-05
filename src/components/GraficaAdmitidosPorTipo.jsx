@@ -1,7 +1,6 @@
 // GraficosAdmitidos.js
 import { useState, useEffect, useRef } from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { datosEstudiantes } from "../data/datosEstudiantes";
 import { Card, CardContent, Button } from '@mui/material';
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -12,38 +11,45 @@ const GraficaAdmitidos = () => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    const data = datosEstudiantes.reduce((acc, estudiante) => {
-      const tipoAdmision = estudiante.CIRC_DESCRIPCION;
-      const found = acc.find(item => item.tipoAdmision === tipoAdmision);
-      if (found) {
-        found.cantidad += 1;
-      } else {
-        acc.push({ tipoAdmision: tipoAdmision, cantidad: 1 });
-      }
-      return acc;
-    }, []);
+    // Obtener los datos de localStorage
+    const savedData = localStorage.getItem("fileResponse");
 
-    setChartData(data);
+    if (savedData) {
+      const datosEstudiantes = JSON.parse(savedData);
+
+      // Agrupar los datos por "Tipo de Admisión" (CIRC_DESCRIPCION)
+      const tipoAdmisionCounts = datosEstudiantes.reduce((acc, estudiante) => {
+        const tipoAdmision = estudiante.CIRC_DESCRIPCION;
+        acc[tipoAdmision] = (acc[tipoAdmision] || 0) + 1;
+        return acc;
+      }, {});
+
+      // Formatear los datos para el gráfico
+      const formattedData = Object.entries(tipoAdmisionCounts).map(
+        ([tipoAdmision, cantidad]) => ({
+          tipoAdmision: tipoAdmision,
+          cantidad: cantidad,
+        })
+      );
+
+      setChartData(formattedData);
+    }
   }, []);
 
   const handleExportPDF = () => {
     const input = chartRef.current;
-
     const pdf = new jsPDF('landscape');
-
 
     html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const imgWidth = pdf.internal.pageSize.getWidth();
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-
       pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
       pdf.addPage();
 
       const tableData = chartData.map(item => [item.tipoAdmision, item.cantidad]);
       const columns = ['Tipo de Admisión', 'Cantidad'];
-
 
       pdf.autoTable({
         head: [columns],
