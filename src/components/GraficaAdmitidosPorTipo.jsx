@@ -3,6 +3,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import { Card, CardContent, Button, Typography, Box } from "@mui/material";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { FaFileExcel } from 'react-icons/fa';
 import "jspdf-autotable";
 
 const GraficaAdmitidos = () => {
@@ -78,17 +79,19 @@ const GraficaAdmitidos = () => {
           {chartData.length === 0 ? (
              <Box
              sx={{
-               height: "600px",
-               background: "white",
-               padding: "40px",
-               borderRadius: "10px",
-               display: "flex",
-               alignItems: "center",
-               justifyContent: "center",
+               height: '600px',
+               background: 'white',
+               padding: '20px',
+               borderRadius: '10px',
+               display: 'flex',
+               alignItems: 'center', 
+               justifyContent: 'center',
+               textAlign: 'center', 
              }}
            >
-             <Typography variant="h6" color="textSecondary">
-               NO HAY DATOS DISPONIBLE. POR FAVOR, CARGAR EL ARCHIVO EXCEL PARA LOS DATOS.
+             <Typography variant="h6" color="textSecondary" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+               <FaFileExcel style={{ color: 'green', marginRight: '10px', fontSize: '40px' }} />
+               NO HAY DATOS DISPONIBLES. POR FAVOR, CARGAR EL ARCHIVO EXCEL PARA LOS DATOS.
              </Typography>
            </Box>
           ) : (

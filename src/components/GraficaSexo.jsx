@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { Card, CardContent, Box, Button, Typography } from "@mui/material";
 import jsPDF from "jspdf";
+import { FaFileExcel } from 'react-icons/fa';
 import html2canvas from "html2canvas";
 import "jspdf-autotable";
 
@@ -117,20 +118,22 @@ const GraficaSexo = () => {
               </div>
             ) : (
               <Box
-            sx={{
-              height: "600px",
-              background: "white",
-              padding: "20px",
-              borderRadius: "10px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Typography variant="h6" color="textSecondary">
-              NO HAY DATOS DISPONIBLE. POR FAVOR, CARGAR EL ARCHIVO EXCEL PARA LOS DATOS.
-            </Typography>
-          </Box>
+                sx={{
+                  height: '600px',
+                  background: 'white',
+                  padding: '20px',
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  textAlign: 'center', 
+                }}
+              >
+                <Typography variant="h6" color="textSecondary" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <FaFileExcel style={{ color: 'green', marginRight: '10px', fontSize: '40px' }} />
+                  NO HAY DATOS DISPONIBLES. POR FAVOR, CARGAR EL ARCHIVO EXCEL PARA LOS DATOS.
+                </Typography>
+              </Box>
             )}
           </div>
           <Button
