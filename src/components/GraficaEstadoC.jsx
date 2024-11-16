@@ -16,25 +16,31 @@ const GraficaEstadoC = ({ datos, indexBy, title, valueKey, isPercentage = true }
       return; 
     }
 
-    const processedData = datos.reduce((acc, item) => {
-      const key = item[indexBy].length > 8 ? `${item[indexBy].substring(0, 8)}...` : item[indexBy];
+    const savedData = localStorage.getItem('datosEstudiantes');
 
-      if (acc[key]) {
-        acc[key] += 1;
-      } else {
-        acc[key] = 1;
-      }
-      return acc;
-    }, {});
+        if (savedData) {
+            const datos = JSON.parse(savedData);
 
-    const total = datos.length;
+            const processedData = datos.reduce((acc, item) => {
+                const key = item[indexBy].length > 8 ? `${item[indexBy].substring(0, 8)}...` : item[indexBy];
 
-    const data = Object.entries(processedData).map(([key, value]) => ({
-      [indexBy]: key,
-      [valueKey]: isPercentage ? ((value / total) * 100).toFixed(2) : value,
-    }));
+                if (acc[key]) {
+                    acc[key] += 1;
+                } else {
+                    acc[key] = 1;
+                }
+                return acc;
+            }, {});
 
-    setChartData(data);
+            const total = datos.length;
+
+            const data = Object.entries(processedData).map(([key, value]) => ({
+                [indexBy]: key,
+                [valueKey]: isPercentage ? ((value / total) * 100).toFixed(2) : value,
+            }));
+
+            setChartData(data);
+        }
   }, [datos, indexBy, valueKey, isPercentage]);
 
   const generarPDF = () => {
