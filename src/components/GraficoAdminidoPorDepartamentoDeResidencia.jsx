@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ResponsivePie } from '@nivo/pie';
-import { Card, CardContent, Box, Button } from '@mui/material';
+import { Card, CardContent, Box, Button, Typography } from '@mui/material';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
@@ -10,14 +10,13 @@ const GraficoAdmitidosPorDepartamento = () => {
   const chartRef = useRef();
 
   useEffect(() => {
-   
     const savedData = localStorage.getItem('datosEstudiantes');
 
     if (savedData) {
       const datosEstudiantes = JSON.parse(savedData);
 
       const admitidosPorDepartamento = datosEstudiantes.reduce((acc, item) => {
-        const departamento = item['ASPI_DPTORESIDENCIA.1']; 
+        const departamento = item['ASPI_DPTORESIDENCIA.1'];
         if (acc[departamento]) {
           acc[departamento] += 1;
         } else {
@@ -32,25 +31,18 @@ const GraficoAdmitidosPorDepartamento = () => {
         id: key,
         label: key,
         value: ((value / totalAdmitidos) * 100).toFixed(2),
-        cantidad: value
+        cantidad: value,
       }));
-      console.log(data);
       setChartData(data);
     }
   }, []);
 
-  const customColors = [
-    '#ff6b6b',
-    '#4ecdc4',
-    '#1a535c',
-    '#ffe66d',
-    '#ff9f1c',
-  ];
+  const customColors = ['#ff6b6b', '#4ecdc4', '#1a535c', '#ffe66d', '#ff9f1c'];
 
   const generarPDF = () => {
     const pdf = new jsPDF('landscape', 'pt', 'a4');
 
-    html2canvas(chartRef.current).then(canvas => {
+    html2canvas(chartRef.current).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const imgWidth = pdf.internal.pageSize.getWidth();
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
@@ -58,7 +50,7 @@ const GraficoAdmitidosPorDepartamento = () => {
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.addPage();
 
-      const tableData = chartData.map(item => [item.id, item.value]);
+      const tableData = chartData.map((item) => [item.id, item.value]);
       const columns = ['Departamento', 'Porcentaje (%)'];
 
       pdf.autoTable({
@@ -80,63 +72,82 @@ const GraficoAdmitidosPorDepartamento = () => {
     <Card elevation={3} sx={{ margin: 5, borderRadius: 4, marginTop: 2.1 }}>
       <CardContent>
         <Box sx={{ width: '100%', textAlign: 'center', mt: 5 }}>
-          <div
-            ref={chartRef}
-            style={{
-              height: '600px',
-              background: 'white',
-              padding: '20px',
-              borderRadius: '10px',
+          {chartData.length === 0 ? (
+            <Box
+            sx={{
+              height: "600px",
+              background: "white",
+              padding: "20px",
+              borderRadius: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <ResponsivePie
-              data={chartData}
-              margin={{ top: 50, right: 20, bottom: 100, left: 100 }}
-              innerRadius={0.5}
-              padAngle={0.7}
-              cornerRadius={1}
-              activeOuterRadiusOffset={8}
-              colors={customColors}
-              borderWidth={2}
-              borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-              arcLinkLabel={(d) => `${d.id}: ${d.value}`}
-              arcLinkLabelsSkipAngle={5}
-              arcLinkLabelsTextColor="#333333"
-              arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-              arcLabel={(d) => `${d.value}%`}
-              legends={[
-                {
-                  anchor: 'bottom',
-                  direction: 'row',
-                  justify: false,
-                  translateX: 0,
-                  translateY: 56,
-                  itemsSpacing: 10,
-                  itemWidth: 100,
-                  itemHeight: 18,
-                  itemTextColor: '#999',
-                  itemDirection: 'left-to-right',
-                  itemOpacity: 0.85,
-                  symbolSize: 18,
-                  symbolShape: 'circle',
-                  effects: [
-                    {
-                      on: 'hover',
-                      style: {
-                        itemTextColor: '#000',
-                        itemOpacity: 1,
+            <Typography variant="h6" color="textSecondary">
+              NO HAY DATOS DISPONIBLE. POR FAVOR, CARGAR EL ARCHIVO EXCEL PARA LOS DATOS.
+            </Typography>
+          </Box>
+          ) : (
+            <div
+              ref={chartRef}
+              style={{
+                height: '600px',
+                background: 'white',
+                padding: '20px',
+                borderRadius: '10px',
+              }}
+            >
+              <ResponsivePie
+                data={chartData}
+                margin={{ top: 50, right: 20, bottom: 100, left: 100 }}
+                innerRadius={0.5}
+                padAngle={0.7}
+                cornerRadius={1}
+                activeOuterRadiusOffset={8}
+                colors={customColors}
+                borderWidth={2}
+                borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+                arcLinkLabel={(d) => `${d.id}: ${d.value}`}
+                arcLinkLabelsSkipAngle={5}
+                arcLinkLabelsTextColor="#333333"
+                arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+                arcLabel={(d) => `${d.value}%`}
+                legends={[
+                  {
+                    anchor: 'bottom',
+                    direction: 'row',
+                    justify: false,
+                    translateX: 0,
+                    translateY: 56,
+                    itemsSpacing: 10,
+                    itemWidth: 100,
+                    itemHeight: 18,
+                    itemTextColor: '#999',
+                    itemDirection: 'left-to-right',
+                    itemOpacity: 0.85,
+                    symbolSize: 18,
+                    symbolShape: 'circle',
+                    effects: [
+                      {
+                        on: 'hover',
+                        style: {
+                          itemTextColor: '#000',
+                          itemOpacity: 1,
+                        },
                       },
-                    },
-                  ],
-                },
-              ]}
-            />
-          </div>
+                    ],
+                  },
+                ]}
+              />
+            </div>
+          )}
           <Button
             variant="contained"
             color="success"
             onClick={generarPDF}
             sx={{ mt: 2, backgroundColor: 'green' }}
+            disabled={chartData.length === 0}
           >
             Exportar Gráfica
           </Button>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { Card, CardContent, Box, Button } from "@mui/material";
+import { Card, CardContent, Box, Button, Typography } from "@mui/material";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import "jspdf-autotable";
@@ -72,52 +72,73 @@ const GraficaSexo = () => {
               background: "white",
               padding: "20px",
               borderRadius: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <div style={{ height: "500px" }}>
-              <ResponsiveBar
-                data={chartData}
-                keys={["Cantidad"]}
-                indexBy="Sexo"
-                layout="vertical"
-                margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-                padding={0.7}
-                valueScale={{ type: "linear" }}
-                indexScale={{ type: "band", round: true }}
-               
-                colors={({ data }) =>
-                  data.Sexo === "F" ? "#800080" : "#36a2eb"
-                }
-                borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
-                axisLeft={{
-                  tickSize: 5,
-                  tickPadding: 5,
-                  tickRotation: 0,
-                  legend: "Cantidad de Admitidos",
-                  legendPosition: "middle",
-                  legendOffset: -40,
-                }}
-                axisBottom={{
-                  tickSize: 5,
-                  tickPadding: 5,
-                  tickRotation: 0,
-                  legend: "Sexo",
-                  legendPosition: "middle",
-                  legendOffset: 40,
-                }}
-                labelSkipWidth={12}
-                labelSkipHeight={12}
-                labelTextColor="white"
-                enableLabel={true}
-                label={({ value }) => `${value}`}
-              />
-            </div>
+            {chartData.length > 0 ? (
+              <div style={{ height: "600px", width: "100%" }}>
+                <ResponsiveBar
+                  data={chartData}
+                  keys={["Cantidad"]}
+                  indexBy="Sexo"
+                  layout="vertical"
+                  margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                  padding={0.7}
+                  valueScale={{ type: "linear" }}
+                  indexScale={{ type: "band", round: true }}
+                  colors={({ data }) =>
+                    data.Sexo === "F" ? "#800080" : "#36a2eb"
+                  }
+                  borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+                  axisLeft={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: "Cantidad de Admitidos",
+                    legendPosition: "middle",
+                    legendOffset: -40,
+                  }}
+                  axisBottom={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: "Sexo",
+                    legendPosition: "middle",
+                    legendOffset: 40,
+                  }}
+                  labelSkipWidth={12}
+                  labelSkipHeight={12}
+                  labelTextColor="white"
+                  enableLabel={true}
+                  label={({ value }) => `${value}`}
+                />
+              </div>
+            ) : (
+              <Box
+            sx={{
+              height: "600px",
+              background: "white",
+              padding: "20px",
+              borderRadius: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="h6" color="textSecondary">
+              NO HAY DATOS DISPONIBLE. POR FAVOR, CARGAR EL ARCHIVO EXCEL PARA LOS DATOS.
+            </Typography>
+          </Box>
+            )}
           </div>
           <Button
             variant="contained"
             color="success"
             onClick={generarPDF}
-            sx={{ mt: 1, backgroundColor: 'green' }}
+            sx={{ mt: 1, backgroundColor: "green" }}
+            disabled={chartData.length === 0}
           >
             Exportar Gráfica
           </Button>

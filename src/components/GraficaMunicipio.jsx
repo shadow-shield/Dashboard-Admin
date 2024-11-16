@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
-import { Card, CardContent, Box, Button } from '@mui/material';
+import { Card, CardContent, Box, Button, Typography } from '@mui/material';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -12,7 +12,7 @@ const GraficoEstudiantesPorMunicipio = () => {
     useEffect(() => {
         const savedData = localStorage.getItem('datosEstudiantes');
 
-        if ( savedData ) {
+        if (savedData) {
             const datosEstudiantes = JSON.parse(savedData);
 
             const estudiantesPorMunicipio = datosEstudiantes.reduce((acc, item) => {
@@ -30,7 +30,6 @@ const GraficoEstudiantesPorMunicipio = () => {
             const totalEstudiantes = datosEstudiantes.length;
 
             const data = Object.entries(estudiantesPorMunicipio).map(([key, value]) => ({
-            
                 municipio: key,
                 porcentaje: ((value / totalEstudiantes) * 100).toFixed(2),
             }));
@@ -42,7 +41,7 @@ const GraficoEstudiantesPorMunicipio = () => {
     const generarPDF = () => {
         const pdf = new jsPDF('landscape', 'pt', 'a4');
 
-        html2canvas(chartRef.current).then(canvas => {
+        html2canvas(chartRef.current).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
             const imgWidth = pdf.internal.pageSize.getWidth();
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
@@ -50,8 +49,7 @@ const GraficoEstudiantesPorMunicipio = () => {
             pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
             pdf.addPage();
 
-
-            const tableData = chartData.map(item => [item.municipio, item.porcentaje]);
+            const tableData = chartData.map((item) => [item.municipio, item.porcentaje]);
             const columns = ['Municipio', 'Porcentaje (%)'];
 
             pdf.autoTable({
@@ -62,7 +60,7 @@ const GraficoEstudiantesPorMunicipio = () => {
                 headStyles: {
                     fillColor: "green",
                     textColor: [255, 255, 255],
-                }
+                },
             });
 
             pdf.save('REPORTE_CLASIFICADOS_POR_MUNICIPIOS.pdf');
@@ -80,50 +78,71 @@ const GraficoEstudiantesPorMunicipio = () => {
                             background: 'white',
                             padding: '20px',
                             borderRadius: '10px',
+                            position: 'relative',
                         }}
                     >
-                        <div style={{ height: '500px' }}>
-                            <ResponsiveBar
-                                data={chartData}
-                                keys={['porcentaje']}
-                                indexBy="municipio"
-                                layout="vertical"
-                                margin={{ top: 10, right: 130, bottom: 80, left: 60 }}
-                                padding={0.3}
-                                valueScale={{ type: 'linear' }}
-                                indexScale={{ type: 'band', round: true }}
-                                colors={['#FFA500']}
-                                borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-                                axisLeft={{
-                                    tickSize: 5,
-                                    tickPadding: 5,
-                                    tickRotation: 0,
-                                    legend: 'Porcentaje de Estudiantes (%)',
-                                    legendPosition: 'middle',
-                                    legendOffset: -40,
-                                }}
-                                axisBottom={{
-                                    tickSize: 5,
-                                    tickPadding: 5,
-                                    tickRotation: 45,
-                                    legend: 'Municipios',
-                                    legendPosition: 'middle',
-                                    legendOffset: 70,
-                                }}
-                                
-                                labelSkipWidth={12}
-                                labelSkipHeight={12}
-                                labelTextColor="white"
-                                enableLabel={true}
-                                label={({ value }) => `${value}%`}
-                            />
-                        </div>
+                        {chartData.length === 0 ? (
+                             <Box
+                             sx={{
+                               height: "600px",
+                               background: "white",
+                               padding: "20px",
+                               borderRadius: "10px",
+                               display: "flex",
+                               alignItems: "center",
+                               justifyContent: "center",
+                             }}
+                           >
+                             <Typography variant="h6" color="textSecondary">
+                               NO HAY DATOS DISPONIBLE. POR FAVOR, CARGAR EL ARCHIVO EXCEL PARA LOS DATOS.
+                             </Typography>
+                           </Box>
+                        ) : (
+                            <div style={{ height: '500px' }}>
+                                <ResponsiveBar
+                                    data={chartData}
+                                    keys={['porcentaje']}
+                                    indexBy="municipio"
+                                    layout="vertical"
+                                    margin={{ top: 10, right: 130, bottom: 80, left: 60 }}
+                                    padding={0.3}
+                                    valueScale={{ type: 'linear' }}
+                                    indexScale={{ type: 'band', round: true }}
+                                    colors={['#FFA500']}
+                                    borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+                                    axisLeft={{
+                                        tickSize: 5,
+                                        tickPadding: 5,
+                                        tickRotation: 0,
+                                        legend: 'Porcentaje de Estudiantes (%)',
+                                        legendPosition: 'middle',
+                                        legendOffset: -40,
+                                    }}
+                                    axisBottom={{
+                                        tickSize: 5,
+                                        tickPadding: 5,
+                                        tickRotation: 45,
+                                        legend: 'Municipios',
+                                        legendPosition: 'middle',
+                                        legendOffset: 70,
+                                    }}
+                                    labelSkipWidth={12}
+                                    labelSkipHeight={12}
+                                    labelTextColor="white"
+                                    enableLabel={true}
+                                    label={({ value }) => `${value}%`}
+                                />
+                            </div>
+                        )}
                     </div>
 
                     <Button
                         variant="contained"
                         sx={{ mt: 2, backgroundColor: 'green' }}
                         onClick={generarPDF}
+                        aria-label="Botón para exportar el gráfico a PDF"
+                        aria-describedby="exportar-grafico-descripcion"
+                        disabled={chartData.length === 0}
                     >
                         Exportar Gráfica
                     </Button>

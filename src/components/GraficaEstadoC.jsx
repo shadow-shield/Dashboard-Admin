@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { Card, CardContent, Box, Button } from "@mui/material";
+import { Card, CardContent, Box, Button, Typography } from "@mui/material";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import "jspdf-autotable";
@@ -23,7 +23,7 @@ const GraficaEstadoC = () => {
 
       const formattedData = Object.entries(estadoCounts).map(
         ([estadoC, cantidad]) => ({
-          Sexo: estadoC,
+          EstadoCivil: estadoC,
           Cantidad: cantidad,
         })
       );
@@ -43,8 +43,8 @@ const GraficaEstadoC = () => {
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
       pdf.addPage();
 
-      const tableData = chartData.map((item) => [item.Sexo, item.Cantidad]);
-      const columns = ["Sexo", "Cantidad"];
+      const tableData = chartData.map((item) => [item.EstadoCivil, item.Cantidad]);
+      const columns = ["Estado Civil", "Cantidad"];
 
       pdf.autoTable({
         head: [columns],
@@ -72,51 +72,77 @@ const GraficaEstadoC = () => {
               background: "white",
               padding: "20px",
               borderRadius: "10px",
+              position: "relative",
             }}
           >
-            <div style={{ height: "500px" }}>
-              <ResponsiveBar
-                data={chartData}
-                keys={["Cantidad"]}
-                indexBy="Sexo"
-                layout="vertical"
-                margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-                padding={0.7}
-                valueScale={{ type: "linear" }}
-                indexScale={{ type: "band", round: true }}
-                colors={({ data }) =>
-                  data.Sexo === "F" ? "green" : "green"
-                }
-                borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
-                axisLeft={{
-                  tickSize: 5,
-                  tickPadding: 5,
-                  tickRotation: 0,
-                  legend: "Cantidad de Admitidos",
-                  legendPosition: "middle",
-                  legendOffset: -40,
-                }}
-                axisBottom={{
-                  tickSize: 5,
-                  tickPadding: 5,
-                  tickRotation: 0,
-                  legend: "Sexo",
-                  legendPosition: "middle",
-                  legendOffset: 40,
-                }}
-                labelSkipWidth={12}
-                labelSkipHeight={12}
-                labelTextColor="white"
-                enableLabel={true}
-                label={({ value }) => `${value}`}
-              />
-            </div>
+            {chartData.length === 0 ? (
+              <Box
+              sx={{
+                height: "600px",
+                background: "white",
+                padding: "20px",
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography variant="h6" color="textSecondary">
+                NO HAY DATOS DISPONIBLE. POR FAVOR, CARGAR EL ARCHIVO EXCEL PARA LOS DATOS.
+              </Typography>
+            </Box>
+            ) : (
+              <div style={{ height: "500px" }}>
+                <ResponsiveBar
+                  data={chartData}
+                  keys={["Cantidad"]}
+                  indexBy="EstadoCivil"
+                  layout="vertical"
+                  margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                  padding={0.7}
+                  valueScale={{ type: "linear" }}
+                  indexScale={{ type: "band", round: true }}
+                  colors={({ data }) => {
+                    const colorMap = {
+                      Soltero: "#4caf50",
+                      Casado: "#ff9800",
+                      Viudo: "#f44336",
+                      Otro: "#2196f3",
+                    };
+                    return colorMap[data.EstadoCivil] || "#9c27b0";
+                  }}
+                  borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+                  axisLeft={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: "Cantidad de Admitidos",
+                    legendPosition: "middle",
+                    legendOffset: -40,
+                  }}
+                  axisBottom={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: "Estado Civil",
+                    legendPosition: "middle",
+                    legendOffset: 40,
+                  }}
+                  labelSkipWidth={12}
+                  labelSkipHeight={12}
+                  labelTextColor="white"
+                  enableLabel={true}
+                  label={({ value }) => `${value}`}
+                />
+              </div>
+            )}
           </div>
           <Button
             variant="contained"
             color="success"
             onClick={generarPDF}
-            sx={{ mt: 2, backgroundColor: 'green' }}
+            sx={{ mt: 2, backgroundColor: "green" }}
+            disabled={chartData.length === 0}
           >
             Exportar Gráfica
           </Button>

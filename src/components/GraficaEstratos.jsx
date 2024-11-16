@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { Card, CardContent, Box, Button } from "@mui/material";
+import { Card, CardContent, Box, Button, Typography } from "@mui/material";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import "jspdf-autotable";
@@ -15,9 +15,8 @@ const GraficaEstratos = () => {
     if (savedData) {
       const datosEstudiantes = JSON.parse(savedData);
 
-      
       const estratoCounts = datosEstudiantes.reduce((acc, estudiante) => {
-        const estrato = estudiante.ESTRATO; 
+        const estrato = estudiante.ESTRATO;
         acc[estrato] = (acc[estrato] || 0) + 1;
         return acc;
       }, {});
@@ -58,7 +57,7 @@ const GraficaEstratos = () => {
         },
       });
 
-      pdf.save("REPORTE_CLASIFICADO_PORESTRATOpdf");
+      pdf.save("REPORTE_CLASIFICADO_PORESTRATO.pdf");
     });
   };
 
@@ -73,49 +72,72 @@ const GraficaEstratos = () => {
               background: "white",
               padding: "20px",
               borderRadius: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
             }}
           >
-            <div style={{ height: "500px" }}>
-              <ResponsiveBar
-                data={chartData}
-                keys={["Cantidad"]}
-                indexBy="Estrato"
-                layout="vertical"
-                margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-                padding={0.7}
-                valueScale={{ type: "linear" }}
-                indexScale={{ type: "band", round: true }}
-                colors={({ data }) => (data.Estrato ? "#4169E1" : "#4169E1")}  
-                borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
-                axisLeft={{
-                  tickSize: 5,
-                  tickPadding: 5,
-                  tickRotation: 0,
-                  legend: "Cantidad de Estudiantes",
-                  legendPosition: "middle",
-                  legendOffset: -40,
-                }}
-                axisBottom={{
-                  tickSize: 5,
-                  tickPadding: 5,
-                  tickRotation: 0,
-                  legend: "Estrato",
-                  legendPosition: "middle",
-                  legendOffset: 40,
-                }}
-                labelSkipWidth={12}
-                labelSkipHeight={12}
-                labelTextColor="white"
-                enableLabel={true}
-                label={({ value }) => `${value}`}
-              />
-            </div>
+            {chartData.length > 0 ? (
+              <div style={{ height: "500px", width: "100%" }}>
+                <ResponsiveBar
+                  data={chartData}
+                  keys={["Cantidad"]}
+                  indexBy="Estrato"
+                  layout="vertical"
+                  margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                  padding={0.7}
+                  valueScale={{ type: "linear" }}
+                  indexScale={{ type: "band", round: true }}
+                  colors="#4169E1"
+                  borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+                  axisLeft={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: "Cantidad de Estudiantes",
+                    legendPosition: "middle",
+                    legendOffset: -40,
+                  }}
+                  axisBottom={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: "Estrato",
+                    legendPosition: "middle",
+                    legendOffset: 40,
+                  }}
+                  labelSkipWidth={12}
+                  labelSkipHeight={12}
+                  labelTextColor="white"
+                  enableLabel={true}
+                  label={({ value }) => `${value}`}
+                />
+              </div>
+            ) : (
+              <Box
+            sx={{
+              height: "600px",
+              background: "white",
+              padding: "20px",
+              borderRadius: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="h6" color="textSecondary">
+              NO HAY DATOS DISPONIBLE. POR FAVOR, CARGAR EL ARCHIVO EXCEL PARA LOS DATOS.
+            </Typography>
+          </Box>
+            )}
           </div>
           <Button
             variant="contained"
             color="success"
             onClick={generarPDF}
-            sx={{ mt: 2, backgroundColor: 'green' }}
+            sx={{ mt: 2, backgroundColor: "green" }}
+            disabled={chartData.length === 0}
           >
             Exportar Gráfica
           </Button>
