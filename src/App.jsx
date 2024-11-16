@@ -46,6 +46,12 @@ const App = () => {
     setActiveItem(item); 
   };
 
+  if (!sessionStorage.getItem('datosBorrados')) {
+    localStorage.removeItem('datosEstudiantes');
+
+    sessionStorage.setItem('datosBorrados', 'true');
+  }
+
   return (
     <Router>
       <Box
