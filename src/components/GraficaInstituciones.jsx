@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+/*  import { useState, useEffect } from 'react';
 import { ResponsivePie } from '@nivo/pie';
 import { datosEstudiantes } from '../data/datosEstudiantes'; // Asegúrate de que este archivo exporte correctamente los datos
 import { motion } from 'framer-motion';
@@ -89,3 +89,4 @@ const GraficaInst = () => {
 };
 
 export default GraficaInst; 
+  */

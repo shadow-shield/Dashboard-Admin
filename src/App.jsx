@@ -25,11 +25,11 @@ import StackedBarChartOutlinedIcon from "@mui/icons-material/StackedBarChartOutl
 import logo from "./assets/logo.jpg";
 
 
-import GraficaPuntaje from "./components/GraficaPuntaje.jsx";
+/* import GraficaPuntaje from "./components/GraficaPuntaje.jsx"; */
 import Dashboard from "./pages/Dashboard.jsx";
 import AdmitidosSexo from "./pages/AdmitidosSexo.jsx";
 import AdmitidosPorTipo from "./pages/AdmitidosPorTipo.jsx";
-import AdmitidosInst from "./pages/AdmitidosInstuticiones.jsx";
+/* import AdmitidosInst from "./pages/AdmitidosInstuticiones.jsx"; */
 import AdmitidosGeneral from "./pages/AdmitidosGeneral.jsx";
 import AdmitidosEstadoCivil from "./pages/AdmitidosEstadoCivil.jsx";
 import AdmitidosDepartamentos from "./pages/AdmitidosDepartamentos.jsx";
@@ -233,8 +233,8 @@ const App = () => {
             <Route path="/configuracion" element={<Configuracion />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/Estratos" element={<ReportEstratos />} />
-            <Route path="/Graficas" element={<GraficaPuntaje />} />
-            <Route path="/GraficaInst" element={<AdmitidosInst />} />
+            {/* <Route path="/Graficas" element={<GraficaPuntaje />} /> */}
+            {/* <Route path="/GraficaInst" element={<AdmitidosInst />} /> */}
             <Route path="/AdmitidosGeneral" element={<AdmitidosGeneral />} />
             <Route path="/AdmitidosSexo" element={<AdmitidosSexo />} />
             <Route path="/AdmitidosPorTipo" element={<AdmitidosPorTipo />} />

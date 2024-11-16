@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+/*  import { useState, useEffect } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 import { datosEstudiantes } from '../data/datosEstudiantes'; // Asegúrate de usar export default en datosEstudiantes.js
 
@@ -89,3 +89,4 @@ const GraficaPuntaje = () => {
 };
 
 export default GraficaPuntaje;
+ */

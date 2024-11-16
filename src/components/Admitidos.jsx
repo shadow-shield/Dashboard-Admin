@@ -1,13 +1,21 @@
 import { Box, TextField, InputAdornment } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { datosEstudiantes } from "../data/datosEstudiantes";
-
 const Admitidos = () => {
-    const [admitidos] = useState(datosEstudiantes);
+    const [admitidos, setAdmitidos] = useState([]);  
     const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+     
+        const savedData = localStorage.getItem("datosEstudiantes");
+        
+        if (savedData) {
+            
+            setAdmitidos(JSON.parse(savedData));
+        }
+    }, []);  
 
     const filteredAdmitidos = admitidos.filter((item) => {
         return Object.values(item).some((value) =>
@@ -96,7 +104,7 @@ const Admitidos = () => {
                         color: 'white',
                     },
                     '& .MuiTablePagination-root': {
-                        color: 'white', 
+                        color: 'white',
                     },
                 }}
             />
