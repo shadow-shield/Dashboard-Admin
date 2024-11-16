@@ -219,8 +219,8 @@ const App = () => {
             flexDirection: "column",
             width: "100%",
             overflow: "auto",
-            backgroundColor: "white", // Fondo blanco
-            color: "green", // Texto verde
+            backgroundColor: "white", 
+            color: "green", 
           }}
         >
           <img

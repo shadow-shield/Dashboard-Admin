@@ -47,7 +47,7 @@ const UploadJsonFile = () => {
 
       const data = response.data;
 
-      // Guardar la respuesta de la API en localStorage
+     
       localStorage.setItem("datosEstudiantes", JSON.stringify(data));
 
       setUploadStatus("Archivo subido exitosamente.");

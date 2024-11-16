@@ -30,6 +30,7 @@ const GraficoEstudiantesPorMunicipio = () => {
             const totalEstudiantes = datosEstudiantes.length;
 
             const data = Object.entries(estudiantesPorMunicipio).map(([key, value]) => ({
+            
                 municipio: key,
                 porcentaje: ((value / totalEstudiantes) * 100).toFixed(2),
             }));
@@ -49,7 +50,7 @@ const GraficoEstudiantesPorMunicipio = () => {
             pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
             pdf.addPage();
 
-            // Generar la tabla de datos
+
             const tableData = chartData.map(item => [item.municipio, item.porcentaje]);
             const columns = ['Municipio', 'Porcentaje (%)'];
 
@@ -64,7 +65,7 @@ const GraficoEstudiantesPorMunicipio = () => {
                 }
             });
 
-            pdf.save('grafica-municipios.pdf');
+            pdf.save('REPORTE_CLASIFICADOS_POR_MUNICIPIOS.pdf');
         });
     };
 
@@ -109,9 +110,10 @@ const GraficoEstudiantesPorMunicipio = () => {
                                     legendPosition: 'middle',
                                     legendOffset: 70,
                                 }}
+                                
                                 labelSkipWidth={12}
                                 labelSkipHeight={12}
-                                labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+                                labelTextColor="white"
                                 enableLabel={true}
                                 label={({ value }) => `${value}%`}
                             />
@@ -120,10 +122,10 @@ const GraficoEstudiantesPorMunicipio = () => {
 
                     <Button
                         variant="contained"
-                        sx={{ mt: 1, backgroundColor: '#4caf50' }}
+                        sx={{ mt: 2, backgroundColor: 'green' }}
                         onClick={generarPDF}
                     >
-                        Generar Gráfica
+                        Exportar Gráfica
                     </Button>
                 </Box>
             </CardContent>

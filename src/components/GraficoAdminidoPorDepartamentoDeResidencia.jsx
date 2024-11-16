@@ -1,37 +1,42 @@
 import { useState, useEffect, useRef } from 'react';
 import { ResponsivePie } from '@nivo/pie';
 import { Card, CardContent, Box, Button } from '@mui/material';
-import { datosEstudiantes } from '../data/datosEstudiantes';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
-
-const datosAdmitidos = datosEstudiantes;
 
 const GraficoAdmitidosPorDepartamento = () => {
   const [chartData, setChartData] = useState([]);
   const chartRef = useRef();
 
   useEffect(() => {
-    const admitidosPorDepartamento = datosAdmitidos.reduce((acc, item) => {
-      const departamento = item['ASPI_DPTORESIDENCIA_1'];
-      if (acc[departamento]) {
-        acc[departamento] += 1;
-      } else {
-        acc[departamento] = 1;
-      }
-      return acc;
-    }, {});
+   
+    const savedData = localStorage.getItem('datosEstudiantes');
 
-    const totalAdmitidos = datosAdmitidos.length;
+    if (savedData) {
+      const datosEstudiantes = JSON.parse(savedData);
 
-    const data = Object.entries(admitidosPorDepartamento).map(([key, value]) => ({
-      id: key,
-      label: key,
-      value: ((value / totalAdmitidos) * 100).toFixed(2),
-    }));
+      const admitidosPorDepartamento = datosEstudiantes.reduce((acc, item) => {
+        const departamento = item['ASPI_DPTORESIDENCIA.1']; 
+        if (acc[departamento]) {
+          acc[departamento] += 1;
+        } else {
+          acc[departamento] = 1;
+        }
+        return acc;
+      }, {});
 
-    setChartData(data);
+      const totalAdmitidos = datosEstudiantes.length;
+
+      const data = Object.entries(admitidosPorDepartamento).map(([key, value]) => ({
+        id: key,
+        label: key,
+        value: ((value / totalAdmitidos) * 100).toFixed(2),
+        cantidad: value
+      }));
+      console.log(data);
+      setChartData(data);
+    }
   }, []);
 
   const customColors = [
@@ -67,12 +72,12 @@ const GraficoAdmitidosPorDepartamento = () => {
         },
       });
 
-      pdf.save('AdmitidosPorDepartamento.pdf');
+      pdf.save('REPORTE_CLASIFICADOS_POR_DEPARTEMENTOS-RE.pdf');
     });
   };
 
   return (
-    <Card elevation={3} sx={{ margin: 5, borderRadius: 4 ,marginTop:2.1}}>
+    <Card elevation={3} sx={{ margin: 5, borderRadius: 4, marginTop: 2.1 }}>
       <CardContent>
         <Box sx={{ width: '100%', textAlign: 'center', mt: 5 }}>
           <div
@@ -94,7 +99,7 @@ const GraficoAdmitidosPorDepartamento = () => {
               colors={customColors}
               borderWidth={2}
               borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-              arcLinkLabel={(d) => `${d.id}: ${d.value}%`}
+              arcLinkLabel={(d) => `${d.id}: ${d.value}`}
               arcLinkLabelsSkipAngle={5}
               arcLinkLabelsTextColor="#333333"
               arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
@@ -131,7 +136,7 @@ const GraficoAdmitidosPorDepartamento = () => {
             variant="contained"
             color="success"
             onClick={generarPDF}
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, backgroundColor: 'green' }}
           >
             Exportar Gráfica
           </Button>

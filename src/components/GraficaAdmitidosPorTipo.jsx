@@ -11,20 +11,19 @@ const GraficaAdmitidos = () => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    // Obtener los datos de localStorage
-    const savedData = localStorage.getItem("fileResponse");
+    
+    const savedData = localStorage.getItem("datosEstudiantes");
 
     if (savedData) {
       const datosEstudiantes = JSON.parse(savedData);
 
-      // Agrupar los datos por "Tipo de Admisión" (CIRC_DESCRIPCION)
+      
       const tipoAdmisionCounts = datosEstudiantes.reduce((acc, estudiante) => {
         const tipoAdmision = estudiante.CIRC_DESCRIPCION;
         acc[tipoAdmision] = (acc[tipoAdmision] || 0) + 1;
         return acc;
       }, {});
 
-      // Formatear los datos para el gráfico
       const formattedData = Object.entries(tipoAdmisionCounts).map(
         ([tipoAdmision, cantidad]) => ({
           tipoAdmision: tipoAdmision,
@@ -62,8 +61,8 @@ const GraficaAdmitidos = () => {
         },
       });
 
-      // Guardar el PDF
-      pdf.save("grafica_admitidos.pdf");
+
+      pdf.save("Reporte_Clasificados_PorTipos.pdf");
     });
   };
 
@@ -136,6 +135,7 @@ const GraficaAdmitidos = () => {
             variant="contained"
             color="success"
             onClick={handleExportPDF}
+            sx={{ mt: 2, backgroundColor: 'green' }}
           >
             Exportar Gráfica
           </Button>

@@ -10,7 +10,7 @@ const GraficaSexo = () => {
   const chartRef = useRef();
 
   useEffect(() => {
-    const savedData = localStorage.getItem("fileResponse");
+    const savedData = localStorage.getItem("datosEstudiantes");
 
     if (savedData) {
       const datosEstudiantes = JSON.parse(savedData);
@@ -57,7 +57,7 @@ const GraficaSexo = () => {
         },
       });
 
-      pdf.save("Reporte_Grafica_Sexo.pdf");
+      pdf.save("REPORTE_CLASIFADOS_POR_SEXO.pdf");
     });
   };
 
@@ -84,7 +84,7 @@ const GraficaSexo = () => {
                 padding={0.7}
                 valueScale={{ type: "linear" }}
                 indexScale={{ type: "band", round: true }}
-                // Personalizar los colores según el valor de "Sexo"
+               
                 colors={({ data }) =>
                   data.Sexo === "F" ? "#800080" : "#36a2eb"
                 }
@@ -117,7 +117,7 @@ const GraficaSexo = () => {
             variant="contained"
             color="success"
             onClick={generarPDF}
-            sx={{ mt: 2 }}
+            sx={{ mt: 1, backgroundColor: 'green' }}
           >
             Exportar Gráfica
           </Button>

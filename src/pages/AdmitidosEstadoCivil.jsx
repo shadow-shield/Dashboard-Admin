@@ -4,16 +4,16 @@ import GraficaEstadoC from "../components/GraficaEstadoC"
 const AdmitidosEstadoCivil = () => {
   return (
     <div >
-        
-        <div>
-            <GraficaEstadoC 
-            datos={null}
-            indexBy="ESTADO_CIVIL"
-            title="Reporte Estado Civil"
-            valueKey="value"
-            isPercentage={false}
-            />
-        </div>
+      <h1 className="text-4xl font-bold text-center text-green-800 mt-8 mb-4">
+        ADMITIDOS CLASIFICADOS POR ESTADO CIVIL
+
+      </h1>
+      <div style={{ marginTop: "2rem" }}>
+        <GraficaEstadoC
+
+        /></div>
+
+
     </div>
   )
 }
