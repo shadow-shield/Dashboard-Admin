@@ -4,18 +4,18 @@ import { useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Admitidos = () => {
-    const [admitidos, setAdmitidos] = useState([]);  
+    const [admitidos, setAdmitidos] = useState([]);  // Estado para los datos
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-     
+        // Recuperar los datos del localStorage
         const savedData = localStorage.getItem("datosEstudiantes");
         
         if (savedData) {
-            
+            // Si los datos existen, parsearlos a JSON y actualizar el estado
             setAdmitidos(JSON.parse(savedData));
         }
-    }, []);  
+    }, []);  // El efecto se ejecuta solo una vez al montar el componente
 
     const filteredAdmitidos = admitidos.filter((item) => {
         return Object.values(item).some((value) =>
@@ -33,7 +33,8 @@ const Admitidos = () => {
             valueOptions: ['CC', 'TI', 'PPT'],
         },
         { field: 'ASPI_NUMERODOCUMENTO', headerName: 'NUM DOCUMENTO', width: 180 },
-        { field: 'NOMBRE_Y_APELLIDO', headerName: 'NOMBRE Y APELLIDO', width: 200 },
+        { field: 'NOMBRE', headerName: 'NOMBRE', width: 200 },
+        { field: 'APELLIDO', headerName: 'APELLIDO', width: 200 },
         { field: 'ASPI_EMAIL', headerName: 'EMAIL', width: 250 },
         { field: 'ASPI_SEXO', headerName: 'SEXO', width: 100 },
         { field: 'ESTADO_CIVIL', headerName: 'ESTADO CIVIL', width: 150 },
@@ -51,15 +52,16 @@ const Admitidos = () => {
         id: index,
         TIDG_ABREVIATURA: item.TIDG_ABREVIATURA,
         ASPI_NUMERODOCUMENTO: item.ASPI_NUMERODOCUMENTO,
-        NOMBRE_Y_APELLIDO: item['NOMBRE Y APELLIDO'],
+        NOMBRE: item.NOMBRE1,
+        APELLIDO: item.APELLIDO1,
         ASPI_EMAIL: item.ASPI_EMAIL,
         ASPI_SEXO: item.ASPI_SEXO,
         ESTADO_CIVIL: item.ESTADO_CIVIL,
         ESTRATO: item.ESTRATO,
         PROG_NOMBRE: item.PROG_NOMBRE,
         CIRC_DESCRIPCION: item.CIRC_DESCRIPCION,
-        ASPI_DPTORESIDENCIA_1: item.ASPI_DPTORESIDENCIA_1,
-        ASPI_MPIORESIDENCIA_1: item.ASPI_MPIORESIDENCIA_1,
+        ASPI_DPTORESIDENCIA_1: item['ASPI_DPTORESIDENCIA.1'],
+        ASPI_MPIORESIDENCIA_1: item['ASPI_MPIORESIDENCIA.1'],
         INST_NOMBREINSTITUCION: item.INST_NOMBREINSTITUCION,
         ESSE_SNP: item.ESSE_SNP,
         PRXF_PUNTAJEOBTENIDO: item.PRXF_PUNTAJEOBTENIDO,

@@ -47,7 +47,7 @@ const UploadJsonFile = () => {
 
       const data = response.data;
 
-     
+      console.log("Datos recibidos del servidor:", data);
       localStorage.setItem("datosEstudiantes", JSON.stringify(data));
 
       setUploadStatus("Archivo subido exitosamente.");
