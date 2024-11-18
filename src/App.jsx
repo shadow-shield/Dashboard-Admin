@@ -40,10 +40,10 @@ import Configuracion from "./components/configuracion.jsx";
 import "./index.css";
 
 const App = () => {
-  const [activeItem, setActiveItem] = useState(""); 
+  const [activeItem, setActiveItem] = useState("");
 
   const handleItemClick = (item) => {
-    setActiveItem(item); 
+    setActiveItem(item);
   };
 
   if (!sessionStorage.getItem('datosBorrados')) {
@@ -75,9 +75,9 @@ const App = () => {
           className="transition-transform duration-300 transform hover:scale-105"
         >
           <List>
-            <ListItemButton 
-              component={Link} 
-              to="/dashboard" 
+            <ListItemButton
+              component={Link}
+              to="/dashboard"
               className={`hover:bg-green-600 transition duration-200 ${activeItem === "dashboard" ? "bg-white text-green-600" : "text-white"}`}
               onClick={() => handleItemClick("dashboard")}
             >
@@ -86,9 +86,9 @@ const App = () => {
               </ListItemIcon>
               <ListItemText primary="Inicio " />
             </ListItemButton>
-            <ListItemButton 
-              component={Link} 
-              to="/AdmitidosGeneral" 
+            <ListItemButton
+              component={Link}
+              to="/AdmitidosGeneral"
               className={`hover:bg-green-600 transition duration-200 ${activeItem === "AdmitidosGeneral" ? "bg-white text-green-600" : "text-white"}`}
               onClick={() => handleItemClick("AdmitidosGeneral")}
             >
@@ -98,9 +98,9 @@ const App = () => {
               <ListItemText primary="Informacion Admitidos" />
             </ListItemButton>
             <ListItem disablePadding>
-              <ListItemButton 
-                component={Link} 
-                to="/AdmitidosSexo" 
+              <ListItemButton
+                component={Link}
+                to="/AdmitidosSexo"
                 className={`hover:bg-green-600 transition duration-200 ${activeItem === "AdmitidosSexo" ? "bg-white text-green-600" : "text-white"}`}
                 onClick={() => handleItemClick("AdmitidosSexo")}
               >
@@ -111,9 +111,9 @@ const App = () => {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton 
-                component={Link} 
-                to="/AdmitidosPorTipo" 
+              <ListItemButton
+                component={Link}
+                to="/AdmitidosPorTipo"
                 className={`hover:bg-green-600 transition duration-200 ${activeItem === "AdmitidosPorTipo" ? "bg-white text-green-600" : "text-white"}`}
                 onClick={() => handleItemClick("AdmitidosPorTipo")}
               >
@@ -124,9 +124,9 @@ const App = () => {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton 
-                component={Link} 
-                to="/AdmitidosPorEstado" 
+              <ListItemButton
+                component={Link}
+                to="/AdmitidosPorEstado"
                 className={`hover:bg-green-600 transition duration-200 ${activeItem === "AdmitidosPorEstado" ? "bg-white text-green-600" : "text-white"}`}
                 onClick={() => handleItemClick("AdmitidosPorEstado")}
               >
@@ -137,9 +137,9 @@ const App = () => {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton 
-                component={Link} 
-                to="/AdmitidosPorDepar" 
+              <ListItemButton
+                component={Link}
+                to="/AdmitidosPorDepar"
                 className={`hover:bg-green-600 transition duration-200 ${activeItem === "AdmitidosPorDepar" ? "bg-white text-green-600" : "text-white"}`}
                 onClick={() => handleItemClick("AdmitidosPorDepar")}
               >
@@ -150,9 +150,9 @@ const App = () => {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton 
-                component={Link} 
-                to="/AdmitidoMuni" 
+              <ListItemButton
+                component={Link}
+                to="/AdmitidoMuni"
                 className={`hover:bg-green-600 transition duration-200 ${activeItem === "AdmitidoMuni" ? "bg-white text-green-600" : "text-white"}`}
                 onClick={() => handleItemClick("AdmitidoMuni")}
               >
@@ -163,9 +163,9 @@ const App = () => {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton 
-                component={Link} 
-                to="/Estratos" 
+              <ListItemButton
+                component={Link}
+                to="/Estratos"
                 className={`hover:bg-green-600 transition duration-200 ${activeItem === "Estratos" ? "bg-white text-green-600" : "text-white"}`}
                 onClick={() => handleItemClick("Estratos")}
               >
@@ -180,9 +180,9 @@ const App = () => {
           <Divider />
           <List>
             <ListItem disablePadding>
-              <ListItemButton 
-                component={Link} 
-                to="/configuracion" 
+              <ListItemButton
+                component={Link}
+                to="/configuracion"
                 className={`hover:bg-green-600 transition duration-200 ${activeItem === "configuracion" ? "bg-white text-green-600" : "text-white"}`}
                 onClick={() => handleItemClick("configuracion")}
               >
@@ -193,11 +193,22 @@ const App = () => {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton 
-                component={Link} 
-                to="/desconectar" 
+              <ListItemButton
+                onClick={() => {
+                  if (window.confirm("¿Seguro que deseas desconectarte?")) {
+                    
+                    if (window.close) {
+                      window.close();
+                    } else {
+                      window.close();
+                      
+                    }
+                  }
+                  window.close();
+                }
+                
+              }
                 className={`hover:bg-green-600 transition duration-200 ${activeItem === "desconectar" ? "bg-white text-green-600" : "text-white"}`}
-                onClick={() => handleItemClick("desconectar")}
               >
                 <ListItemIcon sx={{ color: activeItem === "desconectar" ? "green.600" : "white" }}>
                   <LogoutIcon />
@@ -219,8 +230,8 @@ const App = () => {
             flexDirection: "column",
             width: "100%",
             overflow: "auto",
-            backgroundColor: "white", 
-            color: "green", 
+            backgroundColor: "white",
+            color: "green",
           }}
         >
           <img
