@@ -195,7 +195,7 @@ const App = () => {
             <ListItem disablePadding>
               <ListItemButton
                 onClick={() => {
-                  if (window.confirm("¿Seguro que deseas desconectarte?")) {
+                  if (window.confirm("¿Seguro que deseas desconectarte??")) {
                     
                     if (window.close) {
                       window.close();
